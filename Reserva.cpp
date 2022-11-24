@@ -21,11 +21,16 @@ Reserva::Reserva() {
 
 void Reserva::recebeComando(const string &frase) {
     istringstream iss(frase);
-    int i=1;
+    vector<string>arg;
+
+    int i=0;
     string comand,n;
-    iss>>comand;
-    while (iss >> n)
+    while (iss>>n){
         ++i;
+        arg.push_back(n);
+    }
+    comand=*arg.begin();
+    
     if(comand=="animal" && i==4) cout<<"valido"<<endl;
     if(comand=="animal" && i==2) cout<<"valido"<<endl;
 
@@ -59,7 +64,7 @@ void Reserva::recebeComando(const string &frase) {
 
     else if(comand=="restore"&&i==2) cout<<"valido"<<endl;
 
-    else if(comand=="load"&&i==2) cout<<"valido"<<endl;
+    else if(comand=="load"&&i==2) cout<<"valido"<<endl;                // <- Fazer método para receber comandos por ficheiro
 
     else if(comand=="slide"&&i==3) cout<<"valido"<<endl;
 
