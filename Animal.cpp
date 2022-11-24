@@ -1,7 +1,3 @@
-//
-// Created by Danie on 21/11/2022.
-//
-
 #include <iostream>
 #include "Animal.h"
 
@@ -67,4 +63,6 @@ void Animal::adicionaAlimento(const Alimento &a) {
     //delete(&a);  //nao convem destruir a classe a(Alimento)
 }
 
-
+Animal::~Animal(){
+    cout << "Animal " << getNome() << " morreu" << endl;
+}

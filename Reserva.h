@@ -1,14 +1,10 @@
-//
-// Created by Danie on 23/11/2022.
-//
-
 #ifndef TP_RESERVA_H
 #define TP_RESERVA_H
 #include "animal.h"
 
 class Reserva {
-    vector<Animal>animais;
-    vector<Alimento>alimentos;
+    vector<Animal*>animais;
+    vector<Alimento*>alimentos;
     int SCoelho=20,SOvelha=30,SLobo=25,SCanguru=20;
     const int VCoelho=30,VOvelha=35,VLobo=40,VCanguru=70;
 
@@ -17,10 +13,25 @@ class Reserva {
 
     void recebeComandoPorFicheiro(const string &frase);
     void defineConstante(const string &frase);
-    void verReserva() const;
+
 public:
     Reserva();
     void recebeComando(const string &frase);
+    void verReserva() const;
+
+    vector<Animal*> getAnimais() const;
+    vector<Alimento*> getAlimentos() const;
+    Alimento* getAlimento(int id) const;
+    Animal* getAnimal(int id) const;
+    void adicionaAlimento(Alimento *alimento);
+    void adicionaAnimal(Animal *animal);
+    void removerAlimento(int id);
+    void removerAnimal(int id);
+    string getAsString() const;
+    bool existeAlimento(int x, int y) const;
+    bool existeAnimal(int x, int y) const;
+
+    ~Reserva();
 
 };
 

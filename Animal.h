@@ -1,12 +1,8 @@
-//
-// Created by Danie on 21/11/2022.
-//
-
 #ifndef TP_ANIMAL_H
 #define TP_ANIMAL_H
 
 #include "alimento.h"
-#include "terminal.h"
+//#include "terminal.h"
 #include "coord.h"
 #include <vector>
 
@@ -35,6 +31,7 @@ public:
 
     string getAsString() const;
 
+    ~Animal();
 };
 
 

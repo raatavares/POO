@@ -1,6 +1,3 @@
-//
-// Created by Danie on 23/11/2022.
-//
 #include "fstream"
 #include <iostream>
 #include "Reserva.h"
@@ -116,24 +113,114 @@ void Reserva::recebeComandoPorFicheiro(const string &ficheiro) {
 
 void Reserva::criaAnimal(const char &especie,int x,int y,const string &nome,int saude,int peso,int fome,const int &id,const int &mov_dist) {
     Animal a(especie,Coord(x,y),nome,saude,peso,fome,id,mov_dist);
-    animais.push_back(a);
+    animais.push_back(&a);
 }
 
 void Reserva::criaAlimento(const char &tipo, int x, int y, int val_nutritivo, int toxicidade, const int &tempo,
                            const string &cheiro) {
     Alimento a(tipo,Coord(x,y),val_nutritivo,toxicidade,tempo,cheiro);
-    alimentos.push_back(a);
+    alimentos.push_back(&a);
 }
 
 void Reserva::verReserva() const {
     cout<<"----------- Animais -----------"<<endl<<endl;
-    for(auto &it:animais){
-        cout<<it.getAsString()<<endl;
+    for(auto it:animais){
+        cout<<it->getAsString()<<endl;
     }
     cout<<endl<<"---------- Alimentos ----------"<<endl<<endl;
-    for(auto &it:alimentos){
-        cout<<it.getAsString()<<endl;
+    for(auto it:alimentos){
+        cout<<it->getAsString()<<endl;
     }
+}
+
+
+vector<Animal*> Reserva::getAnimais() const
+{
+    return animais;
+};
+
+vector<Alimento*> Reserva::getAlimentos() const
+{
+    return alimentos;
+};
+
+Alimento* Reserva::getAlimento(int id) const
+{
+    for(int i=0 ; i < alimentos.size(); i++){
+        if(alimentos[i]->getId() == id)
+            return alimentos[i];
+    }
+    return NULL;
+};
+
+Animal* Reserva::getAnimal(int id) const
+{
+    for(int i=0 ; i < animais.size(); i++){
+        if(animais[i]->getID() == id)
+            return animais[i];
+    }
+    return NULL;
+};
+
+void Reserva::adicionaAlimento(Alimento *alimento)
+{
+    alimentos.push_back(alimento);
+};
+
+void Reserva::adicionaAnimal(Animal *animal)
+{
+    animais.push_back(animal);
+};
+
+void Reserva::removerAlimento(int id)
+{
+    for (auto ptr = alimentos.begin(); ptr != alimentos.end(); ) {
+        if ((*(ptr))->getId() == id)
+            ptr = alimentos.erase(ptr);
+        else
+            ptr++;
+    }
+};
+
+void Reserva::removerAnimal(int id)
+{
+    for (auto ptr = animais.begin(); ptr != animais.end(); ) {
+        if ((*(ptr))->getID() == id)
+            ptr = animais.erase(ptr);
+        else
+            ptr++;
+    }
+};
+
+string Reserva::getAsString() const
+{
+    return "test";
+};
+
+bool Reserva::existeAlimento(int x, int y) const
+{
+    for(int i = 0; i < alimentos.size(); i++){
+        if(alimentos[i]->getCoord().getCoordX() == x && alimentos[i]->getCoord().getCoordY() == y)
+            return true;
+    }
+    return false;
+};
+
+bool Reserva::existeAnimal(int x, int y) const
+{
+    for(int i = 0; i < animais.size(); i++){
+        if(animais[i]->getCoord().getCoordX() == x && animais[i]->getCoord().getCoordY() == y)
+            return true;
+    }
+    return false;
+};
+
+
+
+Reserva::~Reserva()
+{
+    animais.clear();
+    alimentos.clear();
 }
 
 

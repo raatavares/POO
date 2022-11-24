@@ -1,7 +1,3 @@
-//
-// Created by Danie on 27/10/2022.
-//
-
 #ifndef UNTITLED3_COORD_H
 #define UNTITLED3_COORD_H
 
