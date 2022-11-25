@@ -13,7 +13,7 @@ class Animal {
     string nome;
     int saude,peso,fome,id,mov_dist;
     Coord coordenada;
-    vector<Alimento> consumo;
+    vector<Alimento*> consumo;
 public:
     Animal(const char &especie,const Coord& coord,const string &nome,int saude,int peso,int fome,const int &id,const int &mov_dist);
 
@@ -27,7 +27,7 @@ public:
     string getEspecie() const;
     string getAlimentacao() const;
 
-    void adicionaAlimento(const Alimento &a);
+    void adicionaAlimento(Alimento* a);
 
     string getAsString() const;
 

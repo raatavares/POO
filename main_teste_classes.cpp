@@ -13,8 +13,8 @@ int main() {
 
     reserva.verReserva();
 
-    reserva.getAnimal(1)->adicionaAlimento(b);
-    reserva.getAnimal(1)->adicionaAlimento(r);
+    reserva.getAnimal(1)->adicionaAlimento(&b);
+    reserva.getAnimal(1)->adicionaAlimento(&r);
     cout<<reserva.getAnimal(1)->getAlimentacao()<<endl;
 
     reserva.verReserva();

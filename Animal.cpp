@@ -51,15 +51,15 @@ string Animal::getAsString() const {
 string Animal::getAlimentacao() const {
     ostringstream oss;
     for(const auto & it : consumo){
-        oss<<it.getTipo()<<" ";
+        oss<<it->getTipo()<<" ";
     }
     oss<<endl;
     return oss.str();
 }
 
-void Animal::adicionaAlimento(const Alimento &a) {
-    Alimento al(a.getTipoChar(),a.getCoord(),a.getNutricao(),a.getToxicidade(),a.getTempo(),a.getcheiro());                                          //Acabar depois de alimento não esquecer composição
-    this->consumo.push_back(al);
+void Animal::adicionaAlimento(Alimento* a) {
+    Alimento al(a->getTipoChar(),a->getCoord(),a->getNutricao(),a->getToxicidade(),a->getTempo(),a->getcheiro());                                          //Acabar depois de alimento não esquecer composição
+    this->consumo.push_back(&al);
     //delete(&a);  //nao convem destruir a classe a(Alimento)
 }
 
