@@ -17,6 +17,7 @@ class Reserva {
 
 public:
     Reserva(int linhas, int colunas);
+
     void recebeComando(const string &frase);
     void verReserva() const;
 
@@ -27,6 +28,7 @@ public:
     vector<Alimento*> getAlimentos() const;
     Alimento* getAlimento(int id) const;
     Animal* getAnimal(int id) const;
+    int getS()const{return SLobo;}
     int getnLinhas() const;
     int getnColunas() const;
     int getL_inicial() const;

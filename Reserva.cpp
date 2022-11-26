@@ -44,6 +44,13 @@ void Reserva::recebeComando(const string &frase) {
     else if(comand=="kill"&&i==3) cout<<"valido"<<endl;
     else if(comand=="killid"&&i==2) cout<<"valido"<<endl;
 
+    else if(comand=="file"&&i==1){
+      string nome;
+      cout<<"Nome do ficheiro:";
+      cin>>nome;
+      recebeComandoPorFicheiro(nome);
+    }
+
     else if(comand=="food"&&i==4) cout<<"valido"<<endl;
     else if(comand=="food"&&i==2) cout<<"valido"<<endl;
 
@@ -131,6 +138,8 @@ void Reserva::defineConstante(const string &frase) {
         }
     }
 
+
+
 }
 
 void Reserva::recebeComandoPorFicheiro(const string &ficheiro) {
@@ -144,7 +153,9 @@ void Reserva::recebeComandoPorFicheiro(const string &ficheiro) {
             recebeComando(linha);
         }
         file.close();
+        cin.ignore();
     }
+
 }
 
 void Reserva::criaAnimal(const char &especie,int x,int y,const string &nome,int saude,int peso,int fome,const int &mov_dist) {
@@ -308,5 +319,7 @@ Reserva::~Reserva()
     animais.clear();
     alimentos.clear();
 }
+
+
 
 
