@@ -2,7 +2,8 @@
 #define UNTITLED3_COORD_H
 
 #include "complex"
-
+#define MAX 500
+#define MIN 16
 
 using namespace std;
 

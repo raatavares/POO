@@ -3,7 +3,7 @@
 
 
 
-Animal::Animal(const char &especie,const Coord& coord,const string &nome, int saude, int peso, int fome, const int &id, const int &mov_dist):especie(especie), coordenada(coord),nome(nome),saude(saude),peso(peso),id(id),mov_dist(mov_dist),fome(fome) {}
+Animal::Animal(const char &especie,Coord* coord,const string &nome, int saude, int peso, int fome, const int &id, const int &mov_dist):especie(especie), coordenada(coord),nome(nome),saude(saude),peso(peso),id(id),mov_dist(mov_dist),fome(fome) {}
 
 const string &Animal::getNome() const {
     return nome;
@@ -25,7 +25,7 @@ int Animal::getID() const {
     return id;
 }
 
-Coord Animal::getCoord() const {
+Coord* Animal::getCoord() const {
     return this->coordenada;
 }
 
@@ -44,13 +44,16 @@ string Animal::getEspecie() const {
 
 string Animal::getAsString() const {
     ostringstream oss;
-    oss<<"Animal) nome:"<<nome<<" | especie:"<<getEspecie()<<" | id:"<<id<<" | saude:"<<saude<<" | peso:"<<peso<<" | fome:"<<fome<<" | passos:"<<mov_dist<<" | coordenada:"<<coordenada.getAsString()<<" | consumido: "<<getAlimentacao()<<endl;
+    oss<<"Animal) nome:"<<nome<<" | especie:"<<getEspecie()<<" | id:"<<id<<" | saude:"<<saude<<" | peso:"<<peso<<" | fome:"<<fome<<" | passos:"<<mov_dist<<" | coordenada:"<<coordenada->getAsString();
+    if(!consumo.empty())
+           oss <<" | consumido: "<<getAlimentacao();
+    oss << endl;
     return oss.str();
 }
 
 string Animal::getAlimentacao() const {
     ostringstream oss;
-    for(const auto & it : consumo){
+    for(const auto it : consumo){
         oss<<it->getTipo()<<" ";
     }
     oss<<endl;
@@ -58,7 +61,7 @@ string Animal::getAlimentacao() const {
 }
 
 void Animal::adicionaAlimento(Alimento* a) {
-    Alimento al(a->getTipoChar(),a->getCoord(),a->getNutricao(),a->getToxicidade(),a->getTempo(),a->getcheiro());                                          //Acabar depois de alimento não esquecer composição
+    Alimento al(a->getTipoChar(),a->getCoord(),a->getNutricao(),a->getToxicidade(),a->getTempo(),a->getcheiro(),7);                                          //Acabar depois de alimento não esquecer composição
     this->consumo.push_back(&al);
     //delete(&a);  //nao convem destruir a classe a(Alimento)
 }

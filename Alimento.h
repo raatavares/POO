@@ -9,17 +9,17 @@ using namespace std;
 class Alimento {
     char tipo;
     int val_nutritivo,toxicidade,tempo,id ;
-    Coord coordnada;
+    Coord *coordnada;
     string cheiro;
 public:
-    Alimento(const char &tipo,const Coord &coord,int val_nutritivo,int toxicidade,const int &tempo,const string &cheiro);
+    Alimento(const char &tipo,Coord *coord,int val_nutritivo,int toxicidade,const int &tempo,const string &cheiro, const int id);
 
 
     int getNutricao() const;
     int getToxicidade() const;
     int getTempo() const;
     int getId() const;
-    Coord getCoord() const;
+    Coord* getCoord() const;
     string getcheiro() const;
     string getTipo() const;
     char getTipoChar() const;

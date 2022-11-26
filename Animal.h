@@ -12,17 +12,17 @@ class Animal {
     char especie;
     string nome;
     int saude,peso,fome,id,mov_dist;
-    Coord coordenada;
+    Coord *coordenada;
     vector<Alimento*> consumo;
 public:
-    Animal(const char &especie,const Coord& coord,const string &nome,int saude,int peso,int fome,const int &id,const int &mov_dist);
+    Animal(const char &especie,Coord* coord,const string &nome,int saude,int peso,int fome,const int &id,const int &mov_dist);
 
     const string &getNome() const;
     int getSaude() const;
     int getPeso() const;
     int getFome() const;
     int getID() const;
-    Coord getCoord() const;
+    Coord* getCoord() const;
     int getMov_dist() const;
     string getEspecie() const;
     string getAlimentacao() const;

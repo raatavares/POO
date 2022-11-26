@@ -1,7 +1,16 @@
 #include <iostream>
 #include "Coord.h"
 
-Coord::Coord(int x, int y):x(x),y(y) {
+Coord::Coord(int x, int y) {
+    if (x <= MAX)
+        this->x = x;
+    else
+        this->x = (rand() % MAX);
+
+    if(y <= MAX)
+        this->y = y;
+    else
+        this->y = (rand() % MAX);
     cout << "Criado ponto/prego"<<getAsString();
 }
 
