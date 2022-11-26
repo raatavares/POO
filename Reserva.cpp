@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Reserva.h"
 
-Reserva::Reserva(int linhas, int colunas):L_inicial(0), C_inicial(0) {
+Reserva::Reserva(int linhas, int colunas):L_inicial(0), C_inicial(0), total(0) {
     if (linhas >= MIN && linhas <= MAX)
         this->nLinhas = linhas;
     else
@@ -103,7 +103,7 @@ void Reserva::recebeComando(const string &frase) {
     else if(comand=="exit"&&i==1) exit(EXIT_SUCCESS);
 
 
-    else if(comand=="animal_teste" && i==10) criaAnimal(*(arg.begin()+1)->c_str(),stoi(*(arg.begin()+2)),stoi(*(arg.begin()+3)),*(arg.begin()+4),stoi(*(arg.begin()+5)),stoi(*(arg.begin()+6)),stoi(*(arg.begin()+7)),stoi(*(arg.begin()+8)),stoi(*(arg.begin()+9)));
+    else if(comand=="animal_teste" && i==9) criaAnimal(*(arg.begin()+1)->c_str(),stoi(*(arg.begin()+2)),stoi(*(arg.begin()+3)),*(arg.begin()+4),stoi(*(arg.begin()+5)),stoi(*(arg.begin()+6)),stoi(*(arg.begin()+7)),stoi(*(arg.begin()+8)));
     else if(comand=="food_teste" && i==8) criaAlimento(*(arg.begin()+1)->c_str(),stoi(*(arg.begin()+2)),stoi(*(arg.begin()+3)),stoi(*(arg.begin()+4)),stoi(*(arg.begin()+5)),stoi(*(arg.begin()+5)),*(arg.begin()+6));
 
 
@@ -147,17 +147,15 @@ void Reserva::recebeComandoPorFicheiro(const string &ficheiro) {
     }
 }
 
-void Reserva::criaAnimal(const char &especie,int x,int y,const string &nome,int saude,int peso,int fome,const int &id,const int &mov_dist) {
-    Coord coord(x,y);
-    Animal a(especie,&coord,nome,saude,peso,fome,id,mov_dist);
-    animais.push_back(&a);
+void Reserva::criaAnimal(const char &especie,int x,int y,const string &nome,int saude,int peso,int fome,const int &mov_dist) {
+    adicionaAnimal(new Animal(especie,new Coord(x,y),nome,saude,peso,fome,total,mov_dist));
+    total++;
 }
 
 void Reserva::criaAlimento(const char &tipo, int x, int y, int val_nutritivo, int toxicidade, const int &tempo,
                            const string &cheiro) {
-    Coord coord(x,y);
-    Alimento a(tipo,&coord,val_nutritivo,toxicidade,tempo,cheiro, 8);
-    alimentos.push_back(&a);
+    adicionaAlimento(new Alimento(tipo,new Coord(x,y),val_nutritivo,toxicidade,tempo,cheiro, total));
+    total++;
 }
 
 void Reserva::verReserva() const {

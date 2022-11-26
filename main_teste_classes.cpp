@@ -3,23 +3,14 @@
 
 int main() {
     string linha;
-    int num=1;
     Reserva reserva(50, 50);
     cout << endl;
     cout << reserva.getAsString();
 
-    Coord coord1(0,0);
-    Coord coord2(1,1);
-
-    Alimento r('r',&coord1 /*Cria e destroi e depois é que volta a criar*/,5,1,20,"carne", num);
-    num++;
-    Alimento b('b',&coord1 ,5,1,20,"carne", num);
-    num++;
-    Animal a('C',&coord2 ,"nome",100,3,100,num,3);
-    num++;
-    reserva.adicionaAlimento(&r);
-    reserva.adicionaAlimento(&b);
-    reserva.adicionaAnimal(&a);
+    reserva.criaAlimento('b',0,0,5,1,20,"carne");
+    reserva.criaAlimento('b',0,1,5,1,20,"carne");
+    reserva.criaAnimal('C',1, 1,"nome",100,3,100,3);
+    reserva.getAnimal(3)->adicionaAlimento(reserva.getAlimento(1));
 
     reserva.verReserva();
     cout << endl;
@@ -30,8 +21,6 @@ int main() {
         reserva.recebeComando(linha);
     }while(linha != "exit");
 
-    reserva.getAnimal(1)->adicionaAlimento(&b);
-    reserva.getAnimal(1)->adicionaAlimento(&r);
     cout<<reserva.getAnimal(1)->getAlimentacao()<<endl;
 
     reserva.verReserva();

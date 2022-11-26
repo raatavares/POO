@@ -61,8 +61,9 @@ string Animal::getAlimentacao() const {
 }
 
 void Animal::adicionaAlimento(Alimento* a) {
-    Alimento al(a->getTipoChar(),a->getCoord(),a->getNutricao(),a->getToxicidade(),a->getTempo(),a->getcheiro(),7);                                          //Acabar depois de alimento não esquecer composição
-    this->consumo.push_back(&al);
+    Alimento al(a->getTipoChar(),a->getCoord(),a->getNutricao(),a->getToxicidade(),a->getTempo(),a->getcheiro(),a->getId());     //Acabar depois de alimento não esquecer composição
+    consumo.push_back(&al);
+    cout << "1";
     //delete(&a);  //nao convem destruir a classe a(Alimento)
 }
 
