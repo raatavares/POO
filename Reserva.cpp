@@ -100,7 +100,7 @@ void Reserva::recebeComando(const string &frase) {
         cout << getAsString();
     }
 
-    else if(comand=="exit"&&i==1) exit(EXIT_SUCCESS);
+    else if(comand=="exit"&&i==1) {cout<<"[saindo...]"<<endl;exit(EXIT_SUCCESS);}
 
 
     else if(comand=="animal_teste" && i==9) criaAnimal(*(arg.begin()+1)->c_str(),stoi(*(arg.begin()+2)),stoi(*(arg.begin()+3)),*(arg.begin()+4),stoi(*(arg.begin()+5)),stoi(*(arg.begin()+6)),stoi(*(arg.begin()+7)),stoi(*(arg.begin()+8)));
@@ -230,7 +230,9 @@ void Reserva::setC_inicial(int c)
 
 void Reserva::adicionaAlimento(Alimento *alimento)
 {
+
     alimentos.push_back(alimento);
+
 };
 
 void Reserva::adicionaAnimal(Animal *animal)

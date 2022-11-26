@@ -11,7 +11,7 @@ Coord::Coord(int x, int y) {
         this->y = y;
     else
         this->y = (rand() % MAX);
-    cout << "Criado ponto/prego"<<getAsString();
+    //cout << "Criado ponto/prego"<<getAsString();
 }
 
 void Coord::setCoord(int x, int y) {
@@ -38,7 +38,7 @@ string Coord::getAsString() const {
 }
 
 Coord::~Coord() {
-    cout<<"Destruido ponto=> "<<getAsString();
+    //cout<<"Destruido ponto=> "<<getAsString();
 }
 
 

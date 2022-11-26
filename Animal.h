@@ -27,7 +27,7 @@ public:
     string getEspecie() const;
     string getAlimentacao() const;
 
-    void adicionaAlimento(Alimento* a);
+    void adiciona_Alimento(Alimento* a);
 
     string getAsString() const;
 

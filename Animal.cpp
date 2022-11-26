@@ -60,7 +60,7 @@ string Animal::getAlimentacao() const {
     return oss.str();
 }
 
-void Animal::adicionaAlimento(Alimento* a) {
+void Animal::adiciona_Alimento(Alimento* a) {
     Alimento al(a->getTipoChar(),a->getCoord(),a->getNutricao(),a->getToxicidade(),a->getTempo(),a->getcheiro(),a->getId());     //Acabar depois de alimento não esquecer composição
     consumo.push_back(&al);
     cout << "1";
