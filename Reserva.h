@@ -1,6 +1,14 @@
 #ifndef TP_RESERVA_H
 #define TP_RESERVA_H
-#include "animal.h"
+#include "Animal.h"
+#include "Canguru.h"
+#include "Coelho.h"
+#include "Misterio.h"
+#include "Lobo.h"
+#include "Ovelha.h"
+#include <iostream>
+#include <cstring>
+#include <string>
 #include <string.h>
 
 class Reserva {

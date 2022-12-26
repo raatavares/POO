@@ -3,7 +3,7 @@
 
 
 
-Animal::Animal(const char &especie,Coord* coord,const int &id,const string &nome,int saude,int peso,int fome,const int &mov_dist):especie(especie), coordenada(coord),nome(nome),saude(saude),peso(peso),id(id),mov_dist(mov_dist),fome(fome) {}
+Animal::Animal(const char &especie,Coord* coord,const int &id,const string &nome,int saude,int peso,const int &mov_dist):especie(especie), coordenada(coord),nome(nome),saude(saude),peso(peso),id(id),mov_dist(mov_dist) {}
 
 const string &Animal::getNome() const {
     return nome;
@@ -15,10 +15,6 @@ int Animal::getSaude() const {
 
 int Animal::getPeso() const {
     return peso;
-}
-
-int Animal::getFome() const {
-    return fome;
 }
 
 int Animal::getID() const {
@@ -44,7 +40,7 @@ string Animal::getEspecie() const {
 
 string Animal::getAsString() const {
     ostringstream oss;
-    oss<<"Animal) nome: "<<nome<<" | especie: "<<getEspecie()<<" | id: "<<id<<" | saude: "<<saude<<" | peso: "<<peso<<" | fome: "<<fome<<" | passos: "<<mov_dist<<" | coordenada: "<<coordenada->getAsString();
+    oss<<"Animal) nome: "<<nome<<" | especie: "<<getEspecie()<<" | id: "<<id<<" | saude: "<<saude<<" | peso: "<<peso<<" | passos: "<<mov_dist<<" | coordenada: "<<coordenada->getAsString();
     if(!consumo.empty())
            oss <<" | consumido: "<<getAlimentacao();
     oss << endl;

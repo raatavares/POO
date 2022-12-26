@@ -11,16 +11,15 @@ using namespace std;
 class Animal {
     char especie;
     string nome;
-    int saude,peso,fome,id,mov_dist;
+    int saude,peso,id,mov_dist;
     Coord *coordenada;
     vector<Alimento*> consumo;
 public:
-    Animal(const char &especie,Coord* coord,const int &id,const string &nome = "paulo",int saude = 1,int peso = 1,int fome = 1,const int &mov_dist = 1);
+    Animal(const char &especie,Coord* coord,const int &id,const string &nome,int saude,int peso,const int &mov_dist);
 
     const string &getNome() const;
     int getSaude() const;
     int getPeso() const;
-    int getFome() const;
     int getID() const;
     Coord* getCoord() const;
     int getMov_dist() const;

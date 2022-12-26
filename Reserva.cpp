@@ -1,7 +1,4 @@
 #include "fstream"
-#include <iostream>
-#include <cstring>
-#include <string>
 #include "Reserva.h"
 
 Reserva::Reserva(int linhas, int colunas):L_inicial(0), C_inicial(0), total(0) {
@@ -215,7 +212,16 @@ void Reserva::criaAnimal(const char &especie, int x, int y) {
         x = rand() % nLinhas;
         y = rand() % nColunas;
     }
-    adicionaAnimal(new Animal(especie,new Coord(x,y),total));
+    if (toupper(especie) == 'C')
+        adicionaAnimal(new Coelho(new Coord(x,y),total));
+    else if (toupper(especie) == 'O')
+        adicionaAnimal(new Ovelha(new Coord(x,y),total));
+    else if (toupper(especie) == 'L')
+        adicionaAnimal(new Lobo(new Coord(x,y),total));
+    else if (toupper(especie) == 'G')
+        adicionaAnimal(new Canguru(new Coord(x,y),total));
+    else if (toupper(especie) == 'M')
+        adicionaAnimal(new Misterio(new Coord(x,y),total));
     total++;
 }
 
