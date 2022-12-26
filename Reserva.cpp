@@ -1,5 +1,7 @@
 #include "fstream"
 #include <iostream>
+#include <cstring>
+#include <string>
 #include "Reserva.h"
 
 Reserva::Reserva(int linhas, int colunas):L_inicial(0), C_inicial(0), total(0) {
@@ -30,91 +32,141 @@ void Reserva::recebeComando(const string &frase) {
     istringstream iss(frase);
     vector<string>arg;
 
-    int i=0;
-    string comand,n;
+    int i=0, id, linha, coluna;
+    string comand,n, nome;
     while (iss>>n){
         ++i;
         arg.push_back(n);
     }
     comand=*arg.begin();
 
-    if(comand=="animal" && i==4) cout<<"valido"<<endl;
-    else if(comand=="animal" && i==2) cout<<"valido"<<endl;
+    if(comand=="animal" && i==4) {
+        linha = stoi(*(arg.begin()+2));
+        coluna = stoi(*(arg.begin()+3));
+        criaAnimal(*(*(arg.begin()+1)).c_str(),linha,coluna);
+    }
 
-    else if(comand=="kill"&&i==3) cout<<"valido"<<endl;
-    else if(comand=="killid"&&i==2) cout<<"valido"<<endl;
+    else if(comand=="animal" && i==2) {
+        criaAnimal(*(*(arg.begin()+1)).c_str());
+    }
 
-    else if(comand=="file"&&i==1){
-      string nome;
+    else if(comand=="kill" && i==3) {
+        linha = stoi(*(arg.begin()+1));
+        coluna = stoi(*(arg.begin()+2));
+        if(existeAnimal(linha, coluna) == true){
+            removerAnimal(linha, coluna);
+        }
+    }
+
+    else if(comand=="killid" && i==2) {
+        id = stoi(*(arg.begin()+1));
+        removerAnimal(id);
+    }
+
+    else if(comand=="file" && i==1){
       cout<<"Nome do ficheiro:";
       cin>>nome;
       recebeComandoPorFicheiro(nome);
     }
 
-    else if(comand=="food"&&i==4) cout<<"valido"<<endl;
-    else if(comand=="food"&&i==2) cout<<"valido"<<endl;
+    else if(comand=="food" && i==4) {
+        linha = stoi(*(arg.begin()+2));
+        coluna = stoi(*(arg.begin()+3));
+        criaAlimento(*(*(arg.begin()+1)).c_str(),linha,coluna);
+    }
 
-    else if(comand=="feed"&&i==5) { cout << "valido" << endl; }
-    else if(comand=="feedid"&&i==4) cout<<"valido"<<endl;
+    else if(comand=="food" && i==2) {
+        criaAlimento(*(*(arg.begin()+1)).c_str());
+    }
 
-    else if(comand=="nofood"&&i==3) cout<<"valido"<<endl;
-    else if(comand=="nofood"&&i==2) cout<<"valido"<<endl;
+    else if(comand=="feed" && i==5) { cout << "valido" << endl; }
+    else if(comand=="feedid" && i==4) cout<<"valido"<<endl;
 
-    else if(comand=="empty"&&i==3) cout<<"valido"<<endl;
+    else if(comand=="nofood" && i==3) {
+        linha = stoi(*(arg.begin()+1));
+        coluna = stoi(*(arg.begin()+2));
+        if(existeAlimento(linha, coluna) == true){
+            removerAlimento(linha, coluna);
+        }
+    }
 
-    else if(comand=="see"&&i==3) cout<<"valido"<<endl;
+    else if(comand=="nofood" && i==2) {
+        id = stoi(*(arg.begin()+1));
+        removerAlimento(id);
+    }
 
-    else if(comand=="info"&&i==2) cout<<"valido"<<endl;
+    else if(comand=="empty" && i==3) {
+        linha = stoi(*(arg.begin()+1));
+        coluna = stoi(*(arg.begin()+2));
+        if(existeAlimento(linha, coluna) == true){
+            removerAlimento(linha, coluna);
+        }
+        if(existeAnimal(linha, coluna) == true){
+            removerAnimal(linha, coluna);
+        }
+    }
 
-    else if(comand=="n"&&i==1) cout<<"valido"<<endl;
-    else if(comand=="n"&&i==2) cout<<"valido"<<endl;
-    else if(comand=="n"&&i==3) cout<<"valido"<<endl;
+    else if(comand=="see" && i==3) {
+        linha = stoi(*(arg.begin()+1));
+        coluna = stoi(*(arg.begin()+2));
+        cout << getAsStringPos(linha, coluna) << endl;
+    }
 
-    else if(comand=="anim"&&i==1){
+    else if(comand=="info" && i==2) {
+        id = stoi(*(arg.begin()+1));
+        if( getAnimal(id) != NULL){
+            cout << getAnimal(id)->getAsString() << endl;
+        }else if(getAlimento(id) != NULL)
+            cout << getAlimento(id)->getAsString() << endl;
+        else
+            cout << "Nao existe" << endl;
+    }
+
+    else if(comand=="n" && i==1) cout<<"valido"<<endl;
+    else if(comand=="n" && i==2) cout<<"valido"<<endl;
+    else if(comand=="n" && i==3) cout<<"valido"<<endl;
+
+    else if(comand=="anim" && i==1){
         for(int i = 0; i < animais.size(); i++){
             cout << animais[i]->getAsString();
         }
     }
 
-    else if(comand=="visanim"&&i==1){
+    else if(comand=="visanim" && i==1){
         for(int i = 0; i < animais.size(); i++){
-            if(animais[i]->getCoord()->getCoordX() > L_inicial && animais[i]->getCoord()->getCoordY() > C_inicial && animais[i]->getCoord()->getCoordX() < L_inicial+mostra && animais[i]->getCoord()->getCoordY() < C_inicial+mostra)
+            if(animais[i]->getCoord()->getCoordX() >= L_inicial && animais[i]->getCoord()->getCoordY() > C_inicial && animais[i]->getCoord()->getCoordX() <= L_inicial+mostra && animais[i]->getCoord()->getCoordY() < C_inicial+mostra)
             cout << animais[i]->getAsString();
         }
     }
 
-    else if(comand=="store"&&i==2) cout<<"valido"<<endl;
+    else if(comand=="store" && i==2) cout<<"valido"<<endl;
 
-    else if(comand=="restore"&&i==2) cout<<"valido"<<endl;
+    else if(comand=="restore" && i==2) cout<<"valido"<<endl;
 
-    else if(comand=="slide"&&i==3) {
-        if(*(arg.begin()+1) == "up" && *(arg.begin()+2) == "linhas"){       //ver segundo e terceiro argumento
+    else if(comand=="slide" && i==3) {
+        if(*(arg.begin()+1) == "up"){
             if(L_inicial != 0)
-                L_inicial--;
+                L_inicial = L_inicial - stoi(*(arg.begin()+2));
         }
-        else if(*(arg.begin()+1) == "down" && *(arg.begin()+2) == "linhas"){       //ver segundo e terceiro argumento
+        else if(*(arg.begin()+1) == "down"){
             if(L_inicial + mostra < nLinhas)
-                L_inicial++;
+                L_inicial = L_inicial + stoi(*(arg.begin()+2));
         }
-        else if(*(arg.begin()+1) == "right" && *(arg.begin()+2) == "colunas"){       //ver segundo e terceiro argumento
+        else if(*(arg.begin()+1) == "right"){
             if(C_inicial + mostra < nColunas)
-                C_inicial++;
+                C_inicial = C_inicial + stoi(*(arg.begin()+2));
         }
-        else if(*(arg.begin()+1) == "left" && *(arg.begin()+2) == "colunas"){       //ver segundo e terceiro argumento
+        else if(*(arg.begin()+1) == "left"){
             if(C_inicial > 0)
-                C_inicial--;
+                C_inicial = C_inicial - stoi(*(arg.begin()+2));
         }
         cout << getAsString();
     }
 
-    else if(comand=="exit"&&i==1) {cout<<"[saindo...]"<<endl;exit(EXIT_SUCCESS);}
+    else if(comand=="exit" && i==1) {cout<<"[saindo...]"<<endl;exit(EXIT_SUCCESS);}
 
 
-    else if(comand=="animal_teste" && i==9) criaAnimal(*(arg.begin()+1)->c_str(),stoi(*(arg.begin()+2)),stoi(*(arg.begin()+3)),*(arg.begin()+4),stoi(*(arg.begin()+5)),stoi(*(arg.begin()+6)),stoi(*(arg.begin()+7)),stoi(*(arg.begin()+8)));
-    else if(comand=="food_teste" && i==8) criaAlimento(*(arg.begin()+1)->c_str(),stoi(*(arg.begin()+2)),stoi(*(arg.begin()+3)),stoi(*(arg.begin()+4)),stoi(*(arg.begin()+5)),stoi(*(arg.begin()+5)),*(arg.begin()+6));
-
-
-    else if(comand=="ver_reserva"&&i==1) verReserva();
+    else if(comand=="ver_reserva" && i==1) verReserva();
             // <- Fazer método para receber comandos por ficheiro
 
     else cout<<"invalido"<<endl;
@@ -158,14 +210,21 @@ void Reserva::recebeComandoPorFicheiro(const string &ficheiro) {
 
 }
 
-void Reserva::criaAnimal(const char &especie,int x,int y,const string &nome,int saude,int peso,int fome,const int &mov_dist) {
-    adicionaAnimal(new Animal(especie,new Coord(x,y),nome,saude,peso,fome,total,mov_dist));
+void Reserva::criaAnimal(const char &especie, int x, int y) {
+    if (x == -1 && y == -1){
+        x = rand() % nLinhas;
+        y = rand() % nColunas;
+    }
+    adicionaAnimal(new Animal(especie,new Coord(x,y),total));
     total++;
 }
 
-void Reserva::criaAlimento(const char &tipo, int x, int y, int val_nutritivo, int toxicidade, const int &tempo,
-                           const string &cheiro) {
-    adicionaAlimento(new Alimento(tipo,new Coord(x,y),val_nutritivo,toxicidade,tempo,cheiro, total));
+void Reserva::criaAlimento(const char &tipo, int x, int y) {
+    if (x == -1 && y == -1){
+        x = rand() % nLinhas;
+        y = rand() % nColunas;
+    }
+    adicionaAlimento(new Alimento(tipo,new Coord(x,y),total));
     total++;
 }
 
@@ -261,10 +320,30 @@ void Reserva::removerAlimento(int id)
     }
 };
 
+void Reserva::removerAlimento(int linha, int coluna)
+{
+    for (auto ptr = alimentos.begin(); ptr != alimentos.end(); ) {
+        if ((*(ptr))->getCoord()->getCoordX() == linha && (*(ptr))->getCoord()->getCoordY() == coluna)
+            ptr = alimentos.erase(ptr);
+        else
+            ptr++;
+    }
+};
+
 void Reserva::removerAnimal(int id)
 {
     for (auto ptr = animais.begin(); ptr != animais.end(); ) {
         if ((*(ptr))->getID() == id)
+            ptr = animais.erase(ptr);
+        else
+            ptr++;
+    }
+};
+
+void Reserva::removerAnimal(int linha, int coluna)
+{
+    for (auto ptr = animais.begin(); ptr != animais.end(); ) {
+        if ((*(ptr))->getCoord()->getCoordX() == linha && (*(ptr))->getCoord()->getCoordY() == coluna)
             ptr = animais.erase(ptr);
         else
             ptr++;
@@ -293,6 +372,29 @@ string Reserva::getAsString() const
     }
     return oss.str();
 };
+
+string Reserva::getAsStringPos(int linha,int coluna) const{
+    ostringstream oss;
+    oss << "Linha: " << linha << "Coluna: " << coluna << endl;
+    if(existeAlimento(linha, coluna) == false)
+        oss << "Nao existe alimentos nesta posicao" << endl;
+    else{
+        for(int i = 0; i < alimentos.size(); i++) {
+            if(alimentos[i]->getCoord()->getCoordX() == linha && alimentos[i]->getCoord()->getCoordY() == coluna)
+                oss << alimentos[i]->getAsString() << endl;
+        }
+    }
+    if(existeAnimal(linha, coluna) == false)
+        oss << "Nao existe animais nesta posicao" << endl;
+    else{
+        for(int i = 0; i < animais.size(); i++) {
+            if(animais[i]->getCoord()->getCoordX() == linha && animais[i]->getCoord()->getCoordY() == coluna)
+                oss << animais[i]->getAsString() << endl;
+        }
+    }
+    return oss.str();
+};
+
 
 bool Reserva::existeAlimento(int x, int y) const
 {

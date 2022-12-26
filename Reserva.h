@@ -21,8 +21,8 @@ public:
     void recebeComando(const string &frase);
     void verReserva() const;
 
-    void criaAnimal(const char &especie,int x,int y,const string &nome,int saude,int peso,int fome,const int &mov_dist);
-    void criaAlimento(const char &tipo,int x,int y,int val_nutritivo,int toxicidade,const int &tempo,const string &cheiro);
+    void criaAnimal(const char &especie,int x = -1,int y = -1);
+    void criaAlimento(const char &tipo,int x = -1,int y = -1);
 
     vector<Animal*> getAnimais() const;
     vector<Alimento*> getAlimentos() const;
@@ -38,8 +38,11 @@ public:
     void adicionaAlimento(Alimento *alimento);
     void adicionaAnimal(Animal *animal);
     void removerAlimento(int id);
+    void removerAlimento(int linha, int coluna);
     void removerAnimal(int id);
+    void removerAnimal(int linha, int coluna);
     string getAsString() const;
+    string getAsStringPos(int linha,int coluna) const;
     bool existeAlimento(int x, int y) const;
     bool existeAnimal(int x, int y) const;
 

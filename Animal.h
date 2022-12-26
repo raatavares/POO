@@ -15,7 +15,7 @@ class Animal {
     Coord *coordenada;
     vector<Alimento*> consumo;
 public:
-    Animal(const char &especie,Coord* coord,const string &nome,int saude,int peso,int fome,const int &id,const int &mov_dist);
+    Animal(const char &especie,Coord* coord,const int &id,const string &nome = "paulo",int saude = 1,int peso = 1,int fome = 1,const int &mov_dist = 1);
 
     const string &getNome() const;
     int getSaude() const;

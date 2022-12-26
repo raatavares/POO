@@ -9,7 +9,7 @@ string Alimento::getTipo() const {
     else return "???";
 }
 
-Alimento::Alimento(const char &tipo, Coord *coord, int val_nutritivo, int toxicidade, const int &tempo,const string &cheiro, const int id):tipo(tipo),
+Alimento::Alimento(const char &tipo, Coord *coord, const int id, int val_nutritivo, int toxicidade, const int &tempo,const string &cheiro):tipo(tipo),
                                                                                                               coordnada(coord),
                                                                                                               val_nutritivo(val_nutritivo),
                                                                                                               toxicidade(toxicidade),
@@ -47,10 +47,10 @@ char Alimento::getTipoChar() const {
 
 string Alimento::getAsString() const {
     ostringstream oss;
-    oss<<"Alimento) tipo:"<<getTipo()<<" | valor nutritivo:"<<val_nutritivo<<" | toxicidade:"<<toxicidade<<" | desparece no instante:"<<tempo<<" | coordenada:"<<coordnada->getAsString()<<" | cheiro:"<<cheiro<<endl;
+    oss<<"Alimento) tipo: "<<getTipo()<<" | valor nutritivo: "<<val_nutritivo<<" | toxicidade: "<<toxicidade<<" | desparece no instante: "<<tempo<<" | coordenada: "<<coordnada->getAsString()<<" | cheiro: "<<cheiro<<endl;
     return oss.str();
 }
 
 Alimento::~Alimento() {
-    cout << "Alimento do tipo " << getTipo() << " ingerido" << endl;
+    //cout << "Alimento do tipo " << getTipo() << " ingerido" << endl;
 }

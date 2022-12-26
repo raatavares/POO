@@ -3,7 +3,7 @@
 
 
 
-Animal::Animal(const char &especie,Coord* coord,const string &nome, int saude, int peso, int fome, const int &id, const int &mov_dist):especie(especie), coordenada(coord),nome(nome),saude(saude),peso(peso),id(id),mov_dist(mov_dist),fome(fome) {}
+Animal::Animal(const char &especie,Coord* coord,const int &id,const string &nome,int saude,int peso,int fome,const int &mov_dist):especie(especie), coordenada(coord),nome(nome),saude(saude),peso(peso),id(id),mov_dist(mov_dist),fome(fome) {}
 
 const string &Animal::getNome() const {
     return nome;
@@ -44,7 +44,7 @@ string Animal::getEspecie() const {
 
 string Animal::getAsString() const {
     ostringstream oss;
-    oss<<"Animal) nome:"<<nome<<" | especie:"<<getEspecie()<<" | id:"<<id<<" | saude:"<<saude<<" | peso:"<<peso<<" | fome:"<<fome<<" | passos:"<<mov_dist<<" | coordenada:"<<coordenada->getAsString();
+    oss<<"Animal) nome: "<<nome<<" | especie: "<<getEspecie()<<" | id: "<<id<<" | saude: "<<saude<<" | peso: "<<peso<<" | fome: "<<fome<<" | passos: "<<mov_dist<<" | coordenada: "<<coordenada->getAsString();
     if(!consumo.empty())
            oss <<" | consumido: "<<getAlimentacao();
     oss << endl;
@@ -61,12 +61,12 @@ string Animal::getAlimentacao() const {
 }
 
 void Animal::adiciona_Alimento(Alimento* a) {
-    Alimento al(a->getTipoChar(),a->getCoord(),a->getNutricao(),a->getToxicidade(),a->getTempo(),a->getcheiro(),a->getId());     //Acabar depois de alimento não esquecer composição
+    Alimento al(a->getTipoChar(),a->getCoord(),a->getId(),a->getNutricao(),a->getToxicidade(),a->getTempo(),a->getcheiro());     //Acabar depois de alimento não esquecer composição
     consumo.push_back(&al);
     cout << "1";
     //delete(&a);  //nao convem destruir a classe a(Alimento)
 }
 
 Animal::~Animal(){
-    cout << "Animal " << getNome() << " morreu" << endl;
+    //cout << "Animal " << getNome() << " morreu" << endl;
 }

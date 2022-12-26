@@ -12,7 +12,7 @@ class Alimento {
     Coord *coordnada;
     string cheiro;
 public:
-    Alimento(const char &tipo,Coord *coord,int val_nutritivo,int toxicidade,const int &tempo,const string &cheiro, const int id);
+    Alimento(const char &tipo,Coord *coord, const int id, int val_nutritivo = 1,int toxicidade = 1,const int &tempo = 1,const string &cheiro = "comida");
 
 
     int getNutricao() const;
