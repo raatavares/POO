@@ -230,7 +230,14 @@ void Reserva::criaAlimento(const char &tipo, int x, int y) {
         x = rand() % nLinhas;
         y = rand() % nColunas;
     }
-    adicionaAlimento(new Alimento(tipo,new Coord(x,y),total));
+    if (toupper(tipo) == 'r')
+        adicionaAlimento(new Relva(new Coord(x,y),total));
+    else if (toupper(tipo) == 't')
+        adicionaAlimento(new Cenoura(new Coord(x,y),total));
+    else if (toupper(tipo) == 'b')
+        adicionaAlimento(new Bife(new Coord(x,y),total));
+    else if (toupper(tipo) == 'a')
+        adicionaAlimento(new Alimento_misterio(new Coord(x,y),total));
     total++;
 }
 

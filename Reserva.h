@@ -6,6 +6,11 @@
 #include "Misterio.h"
 #include "Lobo.h"
 #include "Ovelha.h"
+#include "Relva.h"
+#include "Alimento_misterio.h"
+#include "Bife.h"
+#include "Cenoura.h"
+#include "Corpo.h"
 #include <iostream>
 #include <cstring>
 #include <string>
