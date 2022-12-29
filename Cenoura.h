@@ -12,7 +12,7 @@ class Cenoura : public Alimento  {
 public:
     Cenoura(Coord* coord, int id);
 
-    void verificaComportamento(int instante);
+    void verificaComportamento(int instante) override;
 
     ~Cenoura();
 };

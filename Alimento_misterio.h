@@ -12,7 +12,7 @@ class Alimento_misterio : public Alimento  {
 
 public:
     Alimento_misterio(Coord* coord, int id);
-    void verificaComportamento(int instante);
+    void verificaComportamento(int instante) override;
     ~Alimento_misterio();
 };
 

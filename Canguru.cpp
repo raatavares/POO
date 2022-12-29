@@ -8,6 +8,10 @@ Canguru::Canguru(Coord* coord, int id) : Animal('G', coord, id, "canguru", 20, 1
     morre = 70;
 }
 
+void Canguru::verificaComportamento(int instante){
+    return;
+}
+
 
 Canguru::~Canguru(){
 

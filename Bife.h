@@ -12,7 +12,7 @@ class Bife : public Alimento  {
 
 public:
     Bife(Coord* coord, int id);
-    void verificaComportamento(int instante);
+    void verificaComportamento(int instante) override;
     ~Bife();
 };
 

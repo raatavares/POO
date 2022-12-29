@@ -15,6 +15,8 @@
 #include <cstring>
 #include <string>
 #include <string.h>
+#include <unistd.h>
+
 
 class Reserva {
     vector<Animal*>animais;
@@ -23,13 +25,15 @@ class Reserva {
     const int VCoelho=30,VOvelha=35,VLobo=40,VCanguru=70;
     int nLinhas, nColunas, L_inicial, C_inicial, mostra=20;
 
-    int total;
+    int total, instante;
 
     void recebeComandoPorFicheiro(const string &frase);
+    void passaInstante(int instante);
     void defineConstante(const string &frase);
 
 public:
     Reserva(int linhas, int colunas);
+
 
     void recebeComando(const string &frase);
     void verReserva() const;

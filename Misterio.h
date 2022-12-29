@@ -11,6 +11,7 @@ class Misterio : public Animal {
 
 public:
     Misterio(Coord* coord, int id);
+    void verificaComportamento(int instante) override;
     ~Misterio();
 
 };

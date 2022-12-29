@@ -11,6 +11,7 @@ class Lobo : public Animal {
 
 public:
     Lobo(Coord* coord, int id);
+    void verificaComportamento(int instante) override;
     ~Lobo();
 
 };

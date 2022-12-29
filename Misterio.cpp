@@ -8,6 +8,9 @@ Misterio::Misterio(Coord* coord, int id) : Animal('M', coord, id, "misterio", 10
 
 }
 
+void Misterio::verificaComportamento(int instante){
+    return;
+}
 
 Misterio::~Misterio(){
 

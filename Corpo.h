@@ -13,7 +13,7 @@ class Corpo : public Alimento  {
 
 public:
     Corpo(Coord* coord, int id, int valorNutritivo);
-    void verificaComportamento(int instante);
+    void verificaComportamento(int instante) override;
     ~Corpo();
 };
 

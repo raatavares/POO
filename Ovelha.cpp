@@ -9,6 +9,9 @@ Ovelha::Ovelha(Coord* coord, int id) : Animal('O', coord, id, "ovelha", 30, (4+r
     morre = 35;
 }
 
+void Ovelha::verificaComportamento(int instante){
+    return;
+}
 
 Ovelha::~Ovelha(){
 

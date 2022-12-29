@@ -13,6 +13,7 @@ class Canguru : public Animal {
 
 public:
     Canguru(Coord* coord, int id);
+    void verificaComportamento(int instante) override;
     ~Canguru();
 
 };

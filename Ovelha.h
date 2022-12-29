@@ -14,6 +14,7 @@ class Ovelha : public Animal {
 
 public:
     Ovelha(Coord* coord, int id);
+    void verificaComportamento(int instante) override;
     ~Ovelha();
 
 };

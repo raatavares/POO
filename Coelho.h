@@ -12,6 +12,7 @@ class Coelho : public Animal {
 
 public:
     Coelho(Coord* coord, int id);
+    void verificaComportamento(int instante) override;
     ~Coelho();
 };
 

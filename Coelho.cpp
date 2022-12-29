@@ -9,6 +9,10 @@ Coelho::Coelho(Coord* coord, int id) : Animal('C', coord, id, "coelho", 20, (1+r
     morre = 30;
 }
 
+void Coelho::verificaComportamento(int instante){
+    return;
+}
+
 Coelho::~Coelho(){
 
 }

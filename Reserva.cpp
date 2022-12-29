@@ -23,6 +23,7 @@ Reserva::Reserva(int linhas, int colunas):L_inicial(0), C_inicial(0), total(0) {
         }
         file.close();
     }
+    instante = 0;
 }
 
 void Reserva::recebeComando(const string &frase) {
@@ -119,9 +120,26 @@ void Reserva::recebeComando(const string &frase) {
             cout << "Nao existe" << endl;
     }
 
-    else if(comand=="n" && i==1) cout<<"valido"<<endl;
-    else if(comand=="n" && i==2) cout<<"valido"<<endl;
-    else if(comand=="n" && i==3) cout<<"valido"<<endl;
+    else if(comand=="n" && i==1) {
+        instante++;
+        passaInstante(instante);
+    }
+
+    else if(comand=="n" && i==2) {
+        for(int j = 0; j < stoi(*(arg.begin()+1)); j++){
+            instante++;
+            passaInstante(instante);
+        }
+    }
+
+    else if(comand=="n" && i==3) {
+        for(int j = 0; j < stoi(*(arg.begin()+1)); j++){
+            instante++;
+            passaInstante(instante);
+            sleep(stoi(*(arg.begin()+2)));
+        }
+
+    }
 
     else if(comand=="anim" && i==1){
         for(int i = 0; i < animais.size(); i++){
@@ -142,22 +160,41 @@ void Reserva::recebeComando(const string &frase) {
 
     else if(comand=="slide" && i==3) {
         if(*(arg.begin()+1) == "up"){
-            if(L_inicial != 0)
-                L_inicial = L_inicial - stoi(*(arg.begin()+2));
+            for(int i = 1; i <= stoi(*(arg.begin()+2)); i++){
+                if(L_inicial != 0)
+                    L_inicial--;
+                else{
+                    L_inicial = nLinhas;
+                }
+            }
         }
         else if(*(arg.begin()+1) == "down"){
-            if(L_inicial + mostra < nLinhas)
-                L_inicial = L_inicial + stoi(*(arg.begin()+2));
+            for(int i = 1; i <= stoi(*(arg.begin()+2)); i++){
+                if(L_inicial != nLinhas)
+                    L_inicial++;
+                else{
+                    L_inicial = 0;
+                }
+            }
         }
         else if(*(arg.begin()+1) == "right"){
-            if(C_inicial + mostra < nColunas)
-                C_inicial = C_inicial + stoi(*(arg.begin()+2));
+            for(int i = 1; i <= stoi(*(arg.begin()+2)); i++){
+                if(C_inicial != nColunas)
+                    C_inicial++;
+                else{
+                    C_inicial = 0;
+                }
+            }
         }
         else if(*(arg.begin()+1) == "left"){
-            if(C_inicial > 0)
-                C_inicial = C_inicial - stoi(*(arg.begin()+2));
+            for(int i = 1; i <= stoi(*(arg.begin()+2)); i++){
+                if(C_inicial != 0)
+                    C_inicial--;
+                else{
+                    C_inicial = nColunas;
+                }
+            }
         }
-        cout << getAsString();
     }
 
     else if(comand=="exit" && i==1) {cout<<"[saindo...]"<<endl;exit(EXIT_SUCCESS);}
@@ -167,6 +204,17 @@ void Reserva::recebeComando(const string &frase) {
             // <- Fazer método para receber comandos por ficheiro
 
     else cout<<"invalido"<<endl;
+
+    cout << getAsString();
+}
+
+void Reserva::passaInstante(int instante){
+    for(int i = 0; i < animais.size(); i++){
+        animais[i]->verificaComportamento(instante);
+    }
+    for(int i = 0; i < alimentos.size(); i++){
+        alimentos[i]->verificaComportamento(instante);
+    }
 }
 
 void Reserva::defineConstante(const string &frase) {
@@ -230,13 +278,13 @@ void Reserva::criaAlimento(const char &tipo, int x, int y) {
         x = rand() % nLinhas;
         y = rand() % nColunas;
     }
-    if (toupper(tipo) == 'r')
+    if (toupper(tipo) == 'R')
         adicionaAlimento(new Relva(new Coord(x,y),total));
-    else if (toupper(tipo) == 't')
+    else if (toupper(tipo) == 'T')
         adicionaAlimento(new Cenoura(new Coord(x,y),total));
-    else if (toupper(tipo) == 'b')
+    else if (toupper(tipo) == 'B')
         adicionaAlimento(new Bife(new Coord(x,y),total));
-    else if (toupper(tipo) == 'a')
+    else if (toupper(tipo) == 'A')
         adicionaAlimento(new Alimento_misterio(new Coord(x,y),total));
     total++;
 }
@@ -366,21 +414,31 @@ void Reserva::removerAnimal(int linha, int coluna)
 string Reserva::getAsString() const
 {
     ostringstream oss;
-    for(int i = L_inicial; (i < nLinhas) && ((i - L_inicial) < mostra); i++){
-        for(int j = C_inicial; (j < nColunas) && ((j - C_inicial) < mostra); j++){
-            if(existeAlimento(i, j) == false && existeAnimal(i, j) == false){
+    int auxL=L_inicial, auxC=C_inicial;
+    for(int i = 1; i <= mostra; i++){
+        auxC = C_inicial;
+        for(int j = 1; j <= mostra; j++){
+            if(existeAlimento(auxL, auxC) == false && existeAnimal(auxL, auxC) == false){
                 oss << '_';
             }else{
                 for(int a = 0; a<alimentos.size(); a++){
-                    if(alimentos[a]->getCoord()->getCoordX() == i && alimentos[a]->getCoord()->getCoordY() == j)
+                    if(alimentos[a]->getCoord()->getCoordX() == auxL && alimentos[a]->getCoord()->getCoordY() == auxC)
                         oss << alimentos[a]->getId();
                 }
                 for(int a = 0; a<animais.size(); a++){
-                    if(animais[a]->getCoord()->getCoordX() == i && animais[a]->getCoord()->getCoordY() == j)
+                    if(animais[a]->getCoord()->getCoordX() == auxL && animais[a]->getCoord()->getCoordY() == auxC)
                         oss << animais[a]->getID();
                 }
             }
+            if (auxC == nColunas)
+                auxC = 0;
+            else
+                auxC++;
         }
+        if (auxL == nLinhas)
+            auxL = 0;
+        else
+            auxL++;
         oss << endl;
     }
     return oss.str();

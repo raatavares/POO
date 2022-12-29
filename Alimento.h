@@ -33,6 +33,8 @@ public:
 
     string getAsString() const;
 
+    virtual void verificaComportamento(int instante) = 0;
+
     ~Alimento();
 };
 
