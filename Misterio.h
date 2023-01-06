@@ -10,7 +10,8 @@ class Misterio : public Animal {
 
 
 public:
-    Misterio(Coord* coord, int id);
+    Misterio(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist);
+    Misterio(int id, int x, int y);
     void verificaComportamento(int instante) override;
     ~Misterio();
 

@@ -10,8 +10,9 @@ class Relva : public Alimento  {
     int fazNascer, duracao;
 
 public:
-
-    Relva(Coord* coord, int id);
+    Relva(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,
+                      const string &cheiro);//apenas para recuperar reserva antiga
+    Relva(int id, int x, int y);
     void verificaComportamento(int instante) override;
     ~Relva();
 };

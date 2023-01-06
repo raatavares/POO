@@ -61,7 +61,7 @@ void Reserva::recebeComando(const string &frase) {
         removerAnimal(id);
     }
 
-    else if(comand=="file" && i==1){
+    else if(comand=="load" && i==1){
       cout<<"Nome do ficheiro:";
       cin>>nome;
       recebeComandoPorFicheiro(nome);
@@ -77,8 +77,13 @@ void Reserva::recebeComando(const string &frase) {
         criaAlimento(*(*(arg.begin()+1)).c_str());
     }
 
-    else if(comand=="feed" && i==5) { cout << "valido" << endl; }
-    else if(comand=="feedid" && i==4) cout<<"valido"<<endl;
+    else if(comand=="feed" && i==5) {
+        feed(stoi(arg[1]), stoi(arg[2]), stoi(arg[3]), stoi(arg[4]));
+    }
+    else if(comand=="feedid" && i==4) {
+        feedid(stoi(arg[1]), stoi(arg[2]), stoi(arg[3]));
+    }
+
 
     else if(comand=="nofood" && i==3) {
         linha = stoi(*(arg.begin()+1));
@@ -149,14 +154,18 @@ void Reserva::recebeComando(const string &frase) {
 
     else if(comand=="visanim" && i==1){
         for(int i = 0; i < animais.size(); i++){
-            if(animais[i]->getCoord()->getCoordX() >= L_inicial && animais[i]->getCoord()->getCoordY() > C_inicial && animais[i]->getCoord()->getCoordX() <= L_inicial+mostra && animais[i]->getCoord()->getCoordY() < C_inicial+mostra)
+            if(animais[i]->getX() >= L_inicial && animais[i]->getY() > C_inicial && animais[i]->getX() <= L_inicial+mostra && animais[i]->getY() < C_inicial+mostra)
             cout << animais[i]->getAsString();
         }
     }
 
-    else if(comand=="store" && i==2) cout<<"valido"<<endl;
+    else if(comand=="store" && i==2){
+        getToFile(arg.at(1));
+    }
 
-    else if(comand=="restore" && i==2) cout<<"valido"<<endl;
+    else if(comand=="restore" && i==2){
+        restoreProgress(arg[1]);
+    }
 
     else if(comand=="slide" && i==3) {
         if(*(arg.begin()+1) == "up"){
@@ -261,15 +270,15 @@ void Reserva::criaAnimal(const char &especie, int x, int y) {
         y = rand() % nColunas;
     }
     if (toupper(especie) == 'C')
-        adicionaAnimal(new Coelho(new Coord(x,y),total));
+        adicionaAnimal(new Coelho(total,x,y));
     else if (toupper(especie) == 'O')
-        adicionaAnimal(new Ovelha(new Coord(x,y),total));
+        adicionaAnimal(new Ovelha(total,x,y));
     else if (toupper(especie) == 'L')
-        adicionaAnimal(new Lobo(new Coord(x,y),total));
+        adicionaAnimal(new Lobo(total,x,y));
     else if (toupper(especie) == 'G')
-        adicionaAnimal(new Canguru(new Coord(x,y),total));
+        adicionaAnimal(new Canguru(total,x,y));
     else if (toupper(especie) == 'M')
-        adicionaAnimal(new Misterio(new Coord(x,y),total));
+        adicionaAnimal(new Misterio(total,x,y));
     total++;
 }
 
@@ -279,13 +288,13 @@ void Reserva::criaAlimento(const char &tipo, int x, int y) {
         y = rand() % nColunas;
     }
     if (toupper(tipo) == 'R')
-        adicionaAlimento(new Relva(new Coord(x,y),total));
+        adicionaAlimento(new Relva(total, x, y));
     else if (toupper(tipo) == 'T')
-        adicionaAlimento(new Cenoura(new Coord(x,y),total));
+        adicionaAlimento(new Cenoura(total, x, y));
     else if (toupper(tipo) == 'B')
-        adicionaAlimento(new Bife(new Coord(x,y),total));
+        adicionaAlimento(new Bife(total, x, y));
     else if (toupper(tipo) == 'A')
-        adicionaAlimento(new Alimento_misterio(new Coord(x,y),total));
+        adicionaAlimento(new Alimento_misterio(x, y, total));
     total++;
 }
 
@@ -374,8 +383,10 @@ void Reserva::adicionaAnimal(Animal *animal)
 void Reserva::removerAlimento(int id)
 {
     for (auto ptr = alimentos.begin(); ptr != alimentos.end(); ) {
-        if ((*(ptr))->getId() == id)
+        if ((*(ptr))->getId() == id) {
+            delete *(ptr);
             ptr = alimentos.erase(ptr);
+        }
         else
             ptr++;
     }
@@ -384,8 +395,10 @@ void Reserva::removerAlimento(int id)
 void Reserva::removerAlimento(int linha, int coluna)
 {
     for (auto ptr = alimentos.begin(); ptr != alimentos.end(); ) {
-        if ((*(ptr))->getCoord()->getCoordX() == linha && (*(ptr))->getCoord()->getCoordY() == coluna)
+        if ((*(ptr))->getX() == linha && (*(ptr))->getY() == coluna) {
+            delete *(ptr);
             ptr = alimentos.erase(ptr);
+        }
         else
             ptr++;
     }
@@ -394,8 +407,10 @@ void Reserva::removerAlimento(int linha, int coluna)
 void Reserva::removerAnimal(int id)
 {
     for (auto ptr = animais.begin(); ptr != animais.end(); ) {
-        if ((*(ptr))->getID() == id)
+        if ((*(ptr))->getID() == id){
+            delete *(ptr);
             ptr = animais.erase(ptr);
+        }
         else
             ptr++;
     }
@@ -404,8 +419,10 @@ void Reserva::removerAnimal(int id)
 void Reserva::removerAnimal(int linha, int coluna)
 {
     for (auto ptr = animais.begin(); ptr != animais.end(); ) {
-        if ((*(ptr))->getCoord()->getCoordX() == linha && (*(ptr))->getCoord()->getCoordY() == coluna)
+        if ((*(ptr))->getX() == linha && (*(ptr))->getY()== coluna) {
+            delete *(ptr);
             ptr = animais.erase(ptr);
+        }
         else
             ptr++;
     }
@@ -422,11 +439,11 @@ string Reserva::getAsString() const
                 oss << '_';
             }else{
                 for(int a = 0; a<alimentos.size(); a++){
-                    if(alimentos[a]->getCoord()->getCoordX() == auxL && alimentos[a]->getCoord()->getCoordY() == auxC)
+                    if(alimentos[a]->getX() == auxL && alimentos[a]->getY() == auxC)
                         oss << alimentos[a]->getId();
                 }
                 for(int a = 0; a<animais.size(); a++){
-                    if(animais[a]->getCoord()->getCoordX() == auxL && animais[a]->getCoord()->getCoordY() == auxC)
+                    if(animais[a]->getX() == auxL && animais[a]->getY() == auxC)
                         oss << animais[a]->getID();
                 }
             }
@@ -444,6 +461,20 @@ string Reserva::getAsString() const
     return oss.str();
 };
 
+void Reserva::getToFile(const string& name) const {
+    ostringstream oss;
+    oss<<name<<".txt";
+    ofstream MyFile(oss.str());
+
+    for (Animal *it:animais) {
+        MyFile<<it->getToFile();
+    }
+    for (Alimento *it:alimentos) {
+        MyFile<<it->getToFile();
+    }
+    MyFile.close();
+}
+
 string Reserva::getAsStringPos(int linha,int coluna) const{
     ostringstream oss;
     oss << "Linha: " << linha << "Coluna: " << coluna << endl;
@@ -451,7 +482,7 @@ string Reserva::getAsStringPos(int linha,int coluna) const{
         oss << "Nao existe alimentos nesta posicao" << endl;
     else{
         for(int i = 0; i < alimentos.size(); i++) {
-            if(alimentos[i]->getCoord()->getCoordX() == linha && alimentos[i]->getCoord()->getCoordY() == coluna)
+            if(alimentos[i]->getX()== linha && alimentos[i]->getY() == coluna)
                 oss << alimentos[i]->getAsString() << endl;
         }
     }
@@ -459,7 +490,7 @@ string Reserva::getAsStringPos(int linha,int coluna) const{
         oss << "Nao existe animais nesta posicao" << endl;
     else{
         for(int i = 0; i < animais.size(); i++) {
-            if(animais[i]->getCoord()->getCoordX() == linha && animais[i]->getCoord()->getCoordY() == coluna)
+            if(animais[i]->getX() == linha && animais[i]->getY() == coluna)
                 oss << animais[i]->getAsString() << endl;
         }
     }
@@ -470,7 +501,7 @@ string Reserva::getAsStringPos(int linha,int coluna) const{
 bool Reserva::existeAlimento(int x, int y) const
 {
     for(int i = 0; i < alimentos.size(); i++){
-        if(alimentos[i]->getCoord()->getCoordX() == x && alimentos[i]->getCoord()->getCoordY() == y)
+        if(alimentos[i]->getX()== x && alimentos[i]->getY()== y)
             return true;
     }
     return false;
@@ -479,7 +510,7 @@ bool Reserva::existeAlimento(int x, int y) const
 bool Reserva::existeAnimal(int x, int y) const
 {
     for(int i = 0; i < animais.size(); i++){
-        if(animais[i]->getCoord()->getCoordX() == x && animais[i]->getCoord()->getCoordY() == y)
+        if(animais[i]->getX() == x && animais[i]->getY() == y)
             return true;
     }
     return false;
@@ -492,6 +523,92 @@ Reserva::~Reserva()
     animais.clear();
     alimentos.clear();
 }
+
+void Reserva::feed(int x,int y,int pontos_nutritivos,int toxicidade) {
+    for(int i = 0; i < animais.size(); i++){
+        if(animais[i]->getX() == x && animais[i]->getY() == y)
+            animais[i]->alimentaUser(pontos_nutritivos,toxicidade);
+    }
+}
+
+void Reserva::feedid(int id, int pontos_nutritivos, int toxicidade) {
+    for (int i = 0; i < animais.size(); i++) {
+        if (animais[i]->getID() == id) {
+            animais[i]->alimentaUser(pontos_nutritivos, toxicidade);
+        }
+    }
+}
+
+void Reserva::restoreProgress(const string &filename) {
+    ifstream file;
+    string linha;
+    file.open(filename);
+    if (!file.is_open())
+        cout<<"Erro ao abrir ficheiro de comandos"<<endl;
+    else{
+        for (auto it:animais) {
+            removerAnimal(it->getID());
+        }
+        for (auto it:alimentos) {
+            removerAlimento(it->getId());
+        }
+        while (getline(file,linha)){
+            reconstruct(linha);
+        }
+        file.close();
+        cin.ignore();
+    }
+}
+
+void Reserva::reconstruct(const string &line) {
+    istringstream iss(line);
+    vector<string>arg;
+
+    int i=0, id, linha, coluna;
+    string tipo,n, nome;
+    while (iss>>n){
+        ++i;
+        arg.push_back(n);
+    }
+    tipo=*arg.begin();
+
+    if(tipo=="Animal"){
+        /*Coelho(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist);//apenas para recuperar reserva antiga
+        //           3      7     8               1                    2        5         4         6             9
+         oss<<"Animal "<<especie<<" "<<nome<<" "<<id<<" "<<saude<<" "<<fome<<" "<<peso<<" "<<x<<" "<<y<<" "<< mov <<endl;*/
+        //         0      1           2           3         4         5           6          7       8          9
+        if (toupper(arg[1].c_str()[0]) == 'C')
+            adicionaAnimal(new Coelho(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+        else if (toupper(arg[1].c_str()[0]) == 'O')
+            adicionaAnimal(new Ovelha(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+        else if (toupper(arg[1].c_str()[0]) == 'L')
+            adicionaAnimal(new Lobo(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+        else if (toupper(arg[1].c_str()[0]) == 'G')
+            adicionaAnimal(new Canguru(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+        else if (toupper(arg[1].c_str()[0]) == 'M')
+            adicionaAnimal(new Misterio(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+        total++;
+    }else if(tipo=="Alimento"){
+        /*Alimento_misterio(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,const string &cheiro);
+                                 3      6      7               1                2                   5                     8
+         oss<<"Alimento "<<tipo<<" "<<val_nutritivo<<" "<<id<<" "<<instanteInicial<<" "<<toxicidade<<" "<<x<<" "<<y<<" "<<cheiro<<endl;
+                   0         1              2              3            4                   5             6       7         8
+                      */
+        if (toupper(arg[1].c_str()[0]) == 'R')
+            adicionaAlimento(new Relva(stoi(arg[3]),stoi(arg[6]),stoi(arg[7]),arg[1].c_str()[0],stoi(arg[2]),stoi(arg[5]),arg[8]));
+        else if (toupper(arg[1].c_str()[0]) == 'T')
+            adicionaAlimento(new Cenoura(stoi(arg[3]),stoi(arg[6]),stoi(arg[7]),arg[1].c_str()[0],stoi(arg[2]),stoi(arg[5]),arg[8]));
+        else if (toupper(arg[1].c_str()[0]) == 'B')
+            adicionaAlimento(new Bife(stoi(arg[3]),stoi(arg[6]),stoi(arg[7]),arg[1].c_str()[0],stoi(arg[2]),stoi(arg[5]),arg[8]));
+        else if (toupper(arg[1].c_str()[0]) == 'A')
+            adicionaAlimento(new Alimento_misterio(stoi(arg[3]),stoi(arg[6]),stoi(arg[7]),arg[1].c_str()[0],stoi(arg[2]),stoi(arg[5]),arg[8]));
+        total++;
+    };
+}
+
+
+
+
 
 
 

@@ -10,7 +10,9 @@ class Cenoura : public Alimento  {
 
 
 public:
-    Cenoura(Coord* coord, int id);
+    Cenoura(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,
+                      const string &cheiro);//apenas para recuperar reserva antiga
+    Cenoura(int id, int x, int y);
 
     void verificaComportamento(int instante) override;
 

@@ -11,7 +11,9 @@ class Bife : public Alimento  {
     int duracao;
 
 public:
-    Bife(Coord* coord, int id);
+    Bife(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,
+                      const string &cheiro);//apenas para recuperar reserva antiga
+    Bife(int id, int x, int y);
     void verificaComportamento(int instante) override;
     ~Bife();
 };

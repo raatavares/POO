@@ -3,8 +3,9 @@
 //
 
 #include "Cenoura.h"
-
-Cenoura::Cenoura(Coord* coord, int id) : Alimento('t', coord, id, 4, 0, "verdura"){
+Cenoura::Cenoura(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,
+                                     const string &cheiro): Alimento(especie,x,y,id,val_nutritivo,toxicidade,cheiro){}
+Cenoura::Cenoura(int id, int x, int y) : Alimento('t', x,y, id, 4, 0, "verdura"){
 
 }
 

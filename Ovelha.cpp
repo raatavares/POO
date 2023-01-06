@@ -4,9 +4,13 @@
 
 #include "Ovelha.h"
 
-Ovelha::Ovelha(Coord* coord, int id) : Animal('O', coord, id, "ovelha", 30, (4+rand()%8), 3){
-    fome = 1;
+Ovelha::Ovelha(int id, int x, int y) : Animal('O', x,y, id, "ovelhaXoné", 0, 30, (4 + rand() % 8), 3){
+
     morre = 35;
+}
+Ovelha::Ovelha(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
+               const int &mov_dist): Animal(especie, x,y, id, nome, fome, saude, peso, mov_dist){
+
 }
 
 void Ovelha::verificaComportamento(int instante){

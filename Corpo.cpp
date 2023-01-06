@@ -3,8 +3,9 @@
 //
 
 #include "Corpo.h"
-
-Corpo::Corpo(Coord* coord, int id, int valorNutritivo) : Alimento('p', coord, id, valorNutritivo, 0, "carne"){
+Corpo::Corpo(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,
+                                     const string &cheiro): Alimento(especie,x,y,id,val_nutritivo,toxicidade,cheiro){}
+Corpo::Corpo(int id, int valorNutritivo, int x, int y) : Alimento('p', x,y, id, valorNutritivo, 0, "carne"){
     valorNutritivoInicial = valorNutritivo;
 }
 

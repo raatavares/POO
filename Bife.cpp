@@ -4,7 +4,10 @@
 
 #include "Bife.h"
 
-Bife::Bife(Coord* coord, int id) : Alimento('b', coord, id, 10, 2, "carne,ketchup"){
+Bife::Bife(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,
+                                     const string &cheiro): Alimento(especie,x,y,id,val_nutritivo,toxicidade,cheiro){}
+
+Bife::Bife(int id, int x, int y) : Alimento('b', x,y, id, 10, 2, "carne,ketchup"){
     duracao = 30;
 }
 

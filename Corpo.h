@@ -12,7 +12,9 @@ class Corpo : public Alimento  {
 
 
 public:
-    Corpo(Coord* coord, int id, int valorNutritivo);
+    Corpo(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,
+                      const string &cheiro);//apenas para recuperar reserva antiga
+    Corpo(int id, int valorNutritivo, int x, int y);
     void verificaComportamento(int instante) override;
     ~Corpo();
 };

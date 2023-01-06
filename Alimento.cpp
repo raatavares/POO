@@ -9,14 +9,16 @@ string Alimento::getTipo() const {
     else return "???";
 }
 
-Alimento::Alimento(const char &tipo, Coord *coord, const int id, int val_nutritivo, int toxicidade, const string &cheiro):tipo(tipo),
-                                                                                                              coordnada(coord),
-                                                                                                              val_nutritivo(val_nutritivo),
-                                                                                                              toxicidade(toxicidade),
-                                                                                                              cheiro(cheiro), id(id){
+Alimento::Alimento(const char &tipo, int x, int y, const int id, int val_nutritivo, int toxicidade, const string &cheiro): tipo(tipo),
+                                                                                                                  x(x), y(y),
+                                                                                                                  val_nutritivo(val_nutritivo),
+                                                                                                                  toxicidade(toxicidade),
+                                                                                                                  cheiro(cheiro), id(id){
     instanteInicial = 0;
     morte = false;
 }
+
+
 
 int Alimento::getNutricao() const {
     return val_nutritivo;
@@ -43,8 +45,11 @@ int Alimento::getId() const
   return id;
 };
 
-Coord* Alimento::getCoord() const {
-    return coordnada;
+int Alimento::getX() const {
+    return x;
+}
+int Alimento::getY() const {
+    return y;
 }
 
 string Alimento::getcheiro() const {
@@ -69,10 +74,24 @@ void Alimento::setValorNutritivo(int valorNutritivo){
 
 string Alimento::getAsString() const {
     ostringstream oss;
-    oss<<"Alimento) tipo: "<<getTipo()<<" | valor nutritivo: "<<val_nutritivo<<" | toxicidade: "<<toxicidade<<" | coordenada: "<<coordnada->getAsString()<<" | cheiro: "<<cheiro<<endl;
+    oss<<"Alimento) tipo: "<<getTipo()<<" | valor nutritivo: "<<val_nutritivo<<" | toxicidade: "<<toxicidade<<" | coordenada: ("<<x<<","<<y<<") | cheiro: "<<cheiro<<endl;
     return oss.str();
 }
+
+
 
 Alimento::~Alimento() {
     //cout << "Alimento do tipo " << getTipo() << " ingerido" << endl;
 }
+
+string Alimento::getToFile() const {
+    ostringstream oss;
+    oss<<"Alimento "<<tipo<<" "<<val_nutritivo<<" "<<id<<" "<<instanteInicial<<" "<<toxicidade<<" "<<x<<" "<<y<<" "<<cheiro<<endl;
+    return oss.str();
+}
+
+
+
+
+
+

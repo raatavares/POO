@@ -62,6 +62,11 @@ public:
     string getAsStringPos(int linha,int coluna) const;
     bool existeAlimento(int x, int y) const;
     bool existeAnimal(int x, int y) const;
+    void getToFile(const string& name) const;
+    void restoreProgress(const string& filename);
+    void reconstruct(const string& line);
+    void feed(int x,int y,int pontos_nutritivos,int toxicidade);
+    void feedid(int id,int pontos_nutritivos,int toxicidade);
 
     ~Reserva();
 

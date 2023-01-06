@@ -4,9 +4,13 @@
 
 #include "Coelho.h"
 
-Coelho::Coelho(Coord* coord, int id) : Animal('C', coord, id, "coelho", 20, (1+rand()%4), 4){
-    fome = 1;
+Coelho::Coelho(int id, int x, int y) : Animal('C', x,y, id, "pantufas", 0, 20, (1 + rand() % 4), 4){
+
     morre = 30;
+}
+Coelho::Coelho(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
+               const int &mov_dist): Animal(especie, x,y, id, nome, fome, saude, peso, mov_dist){
+
 }
 
 void Coelho::verificaComportamento(int instante){
@@ -16,3 +20,5 @@ void Coelho::verificaComportamento(int instante){
 Coelho::~Coelho(){
 
 }
+
+

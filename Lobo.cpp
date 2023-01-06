@@ -4,8 +4,12 @@
 
 #include "Lobo.h"
 
-Lobo::Lobo(Coord* coord, int id) : Animal('L', coord, id, "lobo", 25, 15, 5){
-    fome = 2;
+Lobo::Lobo(int id, int x, int y) : Animal('L', x,y, id, "bolt", 0, 25, 15, 5){
+
+}
+Lobo::Lobo(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
+               const int &mov_dist): Animal(especie, x,y, id, nome, fome, saude, peso, mov_dist){
+
 }
 
 void Lobo::verificaComportamento(int instante){

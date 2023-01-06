@@ -8,12 +8,13 @@
 #include "Animal.h"
 
 class Ovelha : public Animal {
-    int morre, fome;
+    int morre;
 
 
 
 public:
-    Ovelha(Coord* coord, int id);
+    Ovelha(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist);
+    Ovelha(int id, int x, int y);
     void verificaComportamento(int instante) override;
     ~Ovelha();
 

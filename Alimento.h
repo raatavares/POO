@@ -10,10 +10,10 @@ class Alimento {
     char tipo;
     int val_nutritivo,toxicidade,id, instanteInicial;
     bool morte;
-    Coord *coordnada;
+    int x,y;
     string cheiro;
 public:
-    Alimento(const char &tipo,Coord *coord, const int id, int val_nutritivo,int toxicidade,const string &cheiro);
+    Alimento(const char &tipo, int x, int y, const int id, int val_nutritivo, int toxicidade, const string &cheiro);
 
 
     int getNutricao() const;
@@ -22,7 +22,8 @@ public:
     int getValorNutritivo() const;
     bool getMorte() const;
     int getId() const;
-    Coord* getCoord() const;
+    int getX() const;
+    int getY() const;
     string getcheiro() const;
     string getTipo() const;
     char getTipoChar() const;
@@ -32,10 +33,11 @@ public:
     void setValorNutritivo(int valorNutritivo);
 
     string getAsString() const;
+    string getToFile() const;
 
     virtual void verificaComportamento(int instante) = 0;
 
-    ~Alimento();
+    virtual ~Alimento();
 };
 
 

@@ -7,10 +7,11 @@
 #include "Animal.h"
 
 class Lobo : public Animal {
-    int fome;
+
 
 public:
-    Lobo(Coord* coord, int id);
+    Lobo(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist);
+    Lobo(int id, int x, int y);
     void verificaComportamento(int instante) override;
     ~Lobo();
 
