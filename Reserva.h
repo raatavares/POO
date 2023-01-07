@@ -69,9 +69,10 @@ public:
     void feed(int x,int y,int pontos_nutritivos,int toxicidade);
     void feedid(int id,int pontos_nutritivos,int toxicidade);
     void atualizaPosicoes();
+    bool alimentoCerto(int idAnimal, int idAlim);
     bool detetaProximidade(int id) const;
     int getID_AlimProx(int id) const;
-    void buscaAlimento();
+    //void buscaAlimento();
     ~Reserva();
 
 };

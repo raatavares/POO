@@ -129,6 +129,10 @@ int Animal::getDetet_dist() const {
     return detet_dist;
 }
 
+char Animal::getEspecieChar() const {
+    return especie;
+}
+
 
 
 

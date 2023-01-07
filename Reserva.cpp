@@ -221,12 +221,14 @@ void Reserva::recebeComando(const string &frase) {
 }
 
 void Reserva::passaInstante(int instante){
+    atualizaPosicoes();
+    /*
     for(int i = 0; i < animais.size(); i++){
-        animais[i]->verificaComportamento(instante);
+        //animais[i]->verificaComportamento(instante);
     }
     for(int i = 0; i < alimentos.size(); i++){
         alimentos[i]->verificaComportamento(instante);
-    }
+    }*/
 }
 
 void Reserva::defineConstante(const string &frase) {
@@ -622,6 +624,12 @@ void Reserva::atualizaPosicoes() {
 
             if(detetaProximidade(it->getID())) {
                 int idAlim = getID_AlimProx(it->getID());
+
+                if (!alimentoCerto(it->getID(),idAlim)){
+                    cout<<"indf3dfj";
+                    it->movimenta();
+                    break;
+                }
                 if (getAlimento(idAlim)->getX() < it->getX() && getAlimento(idAlim)->getY() < it->getY()) { // 0 0   |   0 é menor
                     it->setX(it->getX() - 1);                                                                      //           1 é maior
                     it->setY(it->getY() - 1);
@@ -678,7 +686,7 @@ bool Reserva::detetaProximidade(int id) const{
     return false;
 }
 
-void Reserva::buscaAlimento() {
+/*void Reserva::buscaAlimento() {
     int idAlim ;
     for (auto it:animais) {
         if(detetaProximidade(it->getID())){
@@ -686,7 +694,7 @@ void Reserva::buscaAlimento() {
             return;
         }
     }
-}
+}*/
 
 int Reserva::getID_AlimProx(int id) const {
     for (auto it :animais) {
@@ -701,6 +709,18 @@ int Reserva::getID_AlimProx(int id) const {
             }
         }
     }
+}
+
+bool Reserva::alimentoCerto(int idAnimal, int idAlim) {
+    if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'C')
+        if (getAlimento(idAlim)->getcheiro()=="verdura") return true;
+    else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'O')
+        if (getAlimento(idAlim)->getcheiro()=="erva") return true;
+    else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'L')
+        if (getAlimento(idAlim)->getcheiro()=="carne") return true;
+
+    return false;
+
 }
 
 

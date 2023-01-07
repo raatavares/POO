@@ -6,7 +6,7 @@ int main() {
     Reserva reserva(50, 50);
 
 
-    reserva.criaAlimento('b',7,7);
+    reserva.criaAlimento('t',7,7);
     reserva.criaAlimento('b',5,8);
     reserva.criaAnimal('C',3, 8);
 

@@ -28,6 +28,7 @@ public:
     void setY(int y);
     int getMov_dist() const;
     string getEspecie() const;
+    char getEspecieChar() const;
     string getAlimentacao() const;
     void alimentaUser(int pontos_nutritivos,int toxicidade) ;
 
