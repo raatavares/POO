@@ -12,7 +12,7 @@ class Canguru : public Animal {
 
 
 public:
-    Canguru(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist);
+    Canguru(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist);
     Canguru(int x,int y, int id);
     void verificaComportamento(int instante) override;
     ~Canguru();

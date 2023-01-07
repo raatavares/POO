@@ -11,7 +11,7 @@ class Coelho : public Animal {
 
 
 public:
-    Coelho(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist);//apenas para recuperar reserva antiga
+    Coelho(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist);//apenas para recuperar reserva antiga
     Coelho(int id, int x, int y);
     void verificaComportamento(int instante) override;
     ~Coelho();

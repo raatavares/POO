@@ -45,6 +45,7 @@ public:
     vector<Alimento*> getAlimentos() const;
     Alimento* getAlimento(int id) const;
     Animal* getAnimal(int id) const;
+    Alimento* getAlimento(int x,int y) const;
     int getS()const{return SLobo;}
     int getnLinhas() const;
     int getnColunas() const;
@@ -67,7 +68,10 @@ public:
     void reconstruct(const string& line);
     void feed(int x,int y,int pontos_nutritivos,int toxicidade);
     void feedid(int id,int pontos_nutritivos,int toxicidade);
-
+    void atualizaPosicoes();
+    bool detetaProximidade(int id) const;
+    int getID_AlimProx(int id) const;
+    void buscaAlimento();
     ~Reserva();
 
 };

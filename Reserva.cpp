@@ -42,6 +42,8 @@ void Reserva::recebeComando(const string &frase) {
         linha = stoi(*(arg.begin()+2));
         coluna = stoi(*(arg.begin()+3));
         criaAnimal(*(*(arg.begin()+1)).c_str(),linha,coluna);
+    }else if(comand=="teste"){
+        atualizaPosicoes();
     }
 
     else if(comand=="animal" && i==2) {
@@ -111,6 +113,7 @@ void Reserva::recebeComando(const string &frase) {
 
     else if(comand=="see" && i==3) {
         linha = stoi(*(arg.begin()+1));
+        coluna = stoi(*(arg.begin()+2));
         coluna = stoi(*(arg.begin()+2));
         cout << getAsStringPos(linha, coluna) << endl;
     }
@@ -335,8 +338,15 @@ Animal* Reserva::getAnimal(int id) const
         if(animais[i]->getID() == id)
             return animais[i];
     }
-    return NULL;
+    return nullptr;
 };
+Alimento* Reserva::getAlimento(int x, int y) const {
+    for(int i=0 ; i < alimentos.size(); i++){
+        if(alimentos[i]->getY()==y && alimentos[i]->getX()==x)
+            return alimentos[i];
+    }
+    return nullptr;
+}
 
 int Reserva::getnLinhas() const
 {
@@ -578,15 +588,15 @@ void Reserva::reconstruct(const string &line) {
          oss<<"Animal "<<especie<<" "<<nome<<" "<<id<<" "<<saude<<" "<<fome<<" "<<peso<<" "<<x<<" "<<y<<" "<< mov <<endl;*/
         //         0      1           2           3         4         5           6          7       8          9
         if (toupper(arg[1].c_str()[0]) == 'C')
-            adicionaAnimal(new Coelho(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+            adicionaAnimal(new Coelho(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
         else if (toupper(arg[1].c_str()[0]) == 'O')
-            adicionaAnimal(new Ovelha(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+            adicionaAnimal(new Ovelha(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
         else if (toupper(arg[1].c_str()[0]) == 'L')
-            adicionaAnimal(new Lobo(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+            adicionaAnimal(new Lobo(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
         else if (toupper(arg[1].c_str()[0]) == 'G')
-            adicionaAnimal(new Canguru(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+            adicionaAnimal(new Canguru(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
         else if (toupper(arg[1].c_str()[0]) == 'M')
-            adicionaAnimal(new Misterio(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9])));
+            adicionaAnimal(new Misterio(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
         total++;
     }else if(tipo=="Alimento"){
         /*Alimento_misterio(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,const string &cheiro);
@@ -606,6 +616,92 @@ void Reserva::reconstruct(const string &line) {
     };
 }
 
+void Reserva::atualizaPosicoes() {
+    for (auto it:animais) {
+        for (int i = 0; i <it->getMov_dist() ; ++i) {
+
+            if(detetaProximidade(it->getID())) {
+                int idAlim = getID_AlimProx(it->getID());
+                if (getAlimento(idAlim)->getX() < it->getX() && getAlimento(idAlim)->getY() < it->getY()) { // 0 0   |   0 é menor
+                    it->setX(it->getX() - 1);                                                                      //           1 é maior
+                    it->setY(it->getY() - 1);
+                } else if (getAlimento(idAlim)->getX() < it->getX() && getAlimento(idAlim)->getY() > it->getY()) {//   0 1
+                    it->setX(it->getX() - 1);
+                    it->setY(it->getY() + 1);
+                }
+                else if (getAlimento(idAlim)->getX() > it->getX() && getAlimento(idAlim)->getY() < it->getY()) {//   1 0
+                    it->setX(it->getX() + 1);
+                    it->setY(it->getY() - 1);
+                }
+                else if (getAlimento(idAlim)->getX() > it->getX() && getAlimento(idAlim)->getY() > it->getY()) {//   1 1
+                    it->setX(it->getX() + 1);
+                    it->setY(it->getY() + 1);
+                }
+                else if (getAlimento(idAlim)->getX() > it->getX() && getAlimento(idAlim)->getY() == it->getY())
+                    it->setX(it->getX() + 1);
+                else if (getAlimento(idAlim)->getX() < it->getX() && getAlimento(idAlim)->getY() == it->getY())
+                    it->setX(it->getX() - 1);
+                else if (getAlimento(idAlim)->getX() == it->getX() && getAlimento(idAlim)->getY() < it->getY())
+                    it->setY(it->getY() - 1);
+                else if (getAlimento(idAlim)->getX() == it->getX() && getAlimento(idAlim)->getY() > it->getY())
+                    it->setY(it->getY() + 1);
+            }
+            else it->movimenta();
+
+            if (it->getX()<0) it->setX(0);
+            else if(it->getY()<0) it->setY(0);
+            else if(it->getY()>nColunas) it->setY(nColunas);
+            else if(it->getY()>nLinhas) it->setY(nLinhas);
+        }
+
+    }
+}
+
+
+bool Reserva::detetaProximidade(int id) const{
+
+    for (auto it :animais) {
+        if(it->getID()==id){
+
+            for (int i = it->getX()-it->getDetet_dist(); i < it->getX()+it->getDetet_dist() ; ++i) {
+
+
+                for (int j = it->getY()-it->getDetet_dist(); j <it->getY()+it->getDetet_dist() ; ++j) {
+
+                    if (existeAlimento(i,j)){
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+void Reserva::buscaAlimento() {
+    int idAlim ;
+    for (auto it:animais) {
+        if(detetaProximidade(it->getID())){
+            idAlim=getID_AlimProx(it->getID());
+            return;
+        }
+    }
+}
+
+int Reserva::getID_AlimProx(int id) const {
+    for (auto it :animais) {
+        if(it->getID()==id){
+            for (int i = it->getX()-it->getDetet_dist(); i < it->getX()+it->getDetet_dist() ; ++i) {
+                for (int j = it->getY()-it->getDetet_dist(); j <it->getY()+it->getDetet_dist() ; ++j) {
+
+                    if (existeAlimento(i,j)){
+                        return getAlimento(i,j)->getId();
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 

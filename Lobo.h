@@ -10,7 +10,7 @@ class Lobo : public Animal {
 
 
 public:
-    Lobo(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist);
+    Lobo(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist);
     Lobo(int id, int x, int y);
     void verificaComportamento(int instante) override;
     ~Lobo();

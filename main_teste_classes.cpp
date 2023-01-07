@@ -6,9 +6,9 @@ int main() {
     Reserva reserva(50, 50);
 
 
-    reserva.criaAlimento('b',0,0);
-    reserva.criaAlimento('b',0,1);
-    reserva.criaAnimal('C',1, 1);
+    reserva.criaAlimento('b',7,7);
+    reserva.criaAlimento('b',5,8);
+    reserva.criaAnimal('C',3, 8);
 
 
     cout << reserva.getAsString()<<endl<<endl;

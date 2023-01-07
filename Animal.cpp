@@ -3,7 +3,7 @@
 
 
 
-Animal::Animal(const char &especie,int x,int y,const int &id,const string &nome,int fome,int saude,int peso,const int &mov_dist):especie(especie), x(x),y(y),nome(nome),fome(fome),saude(saude),peso(peso),id(id),mov_dist(mov_dist) {}
+Animal::Animal(const char &especie,int x,int y,const int &id,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist):especie(especie), x(x),y(y),nome(nome),fome(fome),saude(saude),peso(peso),id(id),mov_dist(mov_dist),detet_dist(detet_dist) {}
 
 const string &Animal::getNome() const {
     return nome;
@@ -46,7 +46,7 @@ string Animal::getAsString() const {
 }
 string Animal::getToFile() const {
     ostringstream oss;
-    oss<<"Animal "<<especie<<" "<<nome<<" "<<id<<" "<<saude<<" "<<fome<<" "<<peso<<" "<<x<<" "<<y<<" "<<mov_dist<<" "<<endl;
+    oss<<"Animal "<<especie<<" "<<nome<<" "<<id<<" "<<saude<<" "<<fome<<" "<<peso<<" "<<x<<" "<<y<<" "<<mov_dist<<" "<<detet_dist<<" "<<endl;
     return oss.str();
 }
 
@@ -85,6 +85,51 @@ int Animal::getX() const {
 int Animal::getY() const {
     return y;
 }
+
+void Animal::movimenta() {
+
+    int pos = rand() % 16;
+    if(pos==0||pos==15){
+        y++;
+        cout<<"mexeu"<<endl;
+    }else if(pos==1||pos==14){
+        y++;x++;
+        cout<<"mexeu"<<endl;
+    }else if(pos==2||pos==13){
+        x++;
+        cout<<"mexeu"<<endl;
+    }else if(pos==3||pos==12){
+        y--;x++;
+        cout<<"mexeu"<<endl;
+    }else if(pos==4||pos==11){
+        y--;
+        cout<<"mexeu"<<endl;
+    }else if(pos==5||pos==10){
+        y--;x--;
+        cout<<"mexeu"<<endl;
+    }else if(pos==6||pos==9){
+        x--;
+        cout<<"mexeu"<<endl;
+    }else if(pos==7||pos==8){
+        y++;x--;
+        cout<<"mexeu"<<endl;
+    }
+}
+
+
+
+void Animal::setX(int x) {
+    this->x=x;
+}
+void Animal::setY(int y) {
+    this->y=y;
+}
+
+int Animal::getDetet_dist() const {
+    return detet_dist;
+}
+
+
 
 
 

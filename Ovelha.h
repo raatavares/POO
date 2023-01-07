@@ -13,7 +13,7 @@ class Ovelha : public Animal {
 
 
 public:
-    Ovelha(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist);
+    Ovelha(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist);
     Ovelha(int id, int x, int y);
     void verificaComportamento(int instante) override;
     ~Ovelha();

@@ -4,11 +4,11 @@
 
 #include "Lobo.h"
 
-Lobo::Lobo(int id, int x, int y) : Animal('L', x,y, id, "bolt", 0, 25, 15, 5){
+Lobo::Lobo(int id, int x, int y) : Animal('L', x,y, id, "bolt", 0, 25, 15, 5,5){
 
 }
 Lobo::Lobo(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
-               const int &mov_dist): Animal(especie, x,y, id, nome, fome, saude, peso, mov_dist){
+               const int &mov_dist,int detet_dist): Animal(especie, x,y, id, nome, fome, saude, peso, mov_dist,detet_dist){
 
 }
 
