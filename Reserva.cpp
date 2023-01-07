@@ -222,13 +222,9 @@ void Reserva::recebeComando(const string &frase) {
 
 void Reserva::passaInstante(int instante){
     atualizaPosicoes();
-    /*
-    for(int i = 0; i < animais.size(); i++){
-        //animais[i]->verificaComportamento(instante);
-    }
     for(int i = 0; i < alimentos.size(); i++){
         alimentos[i]->verificaComportamento(instante);
-    }*/
+    }
 }
 
 void Reserva::defineConstante(const string &frase) {
@@ -662,6 +658,14 @@ void Reserva::atualizaPosicoes() {
             else if(it->getY()>nLinhas) it->setY(nLinhas);
         }
 
+        if(existeAlimento(it->getX(), it->getY())){
+            it->verificaAlimentacao(getAlimento(it->getX(), it->getY()));
+            if(getAlimento(it->getX(), it->getY())->getComido() == 1)
+                removerAlimento(getAlimento(it->getX(), it->getY())->getId());
+        }
+
+
+
     }
 }
 
@@ -714,16 +718,14 @@ int Reserva::getID_AlimProx(int id) const {
 bool Reserva::alimentoCerto(int idAnimal, int idAlim) {
     if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'C')
         if (getAlimento(idAlim)->getcheiro()=="verdura") return true;
-    else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'O')
-        if (getAlimento(idAlim)->getcheiro()=="erva") return true;
-    else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'L')
-        if (getAlimento(idAlim)->getcheiro()=="carne") return true;
+        else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'O')
+            if (getAlimento(idAlim)->getcheiro()=="erva") return true;
+            else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'L')
+                if (getAlimento(idAlim)->getcheiro()=="carne") return true;
 
     return false;
 
 }
-
-
 
 
 

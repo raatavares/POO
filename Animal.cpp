@@ -125,6 +125,10 @@ void Animal::setY(int y) {
     this->y=y;
 }
 
+void Animal::setSaude(int saude) {
+    this->saude=saude;
+}
+
 int Animal::getDetet_dist() const {
     return detet_dist;
 }
@@ -132,7 +136,6 @@ int Animal::getDetet_dist() const {
 char Animal::getEspecieChar() const {
     return especie;
 }
-
 
 
 

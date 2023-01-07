@@ -4,6 +4,8 @@
 #include "alimento.h"
 //#include "terminal.h"
 #include "coord.h"
+#include <string.h>
+
 #include <vector>
 
 using namespace std;
@@ -26,6 +28,7 @@ public:
     int getDetet_dist() const;
     void setX(int x);
     void setY(int y);
+    void setSaude(int saude);
     int getMov_dist() const;
     string getEspecie() const;
     char getEspecieChar() const;
@@ -40,7 +43,7 @@ public:
     string getAsString() const;
     string getToFile() const;
 
-    virtual void verificaComportamento(int instante) = 0;
+    virtual void verificaAlimentacao(Alimento* alimento) = 0;
 
     virtual ~Animal();
 };

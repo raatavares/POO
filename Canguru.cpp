@@ -12,7 +12,7 @@ Canguru::Canguru(int id, int x, int y, const char &especie, const string &nome, 
 
 }
 
-void Canguru::verificaComportamento(int instante){
+void Canguru::verificaAlimentacao(Alimento* alimento){
     return;
 }
 

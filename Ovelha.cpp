@@ -13,7 +13,12 @@ Ovelha::Ovelha(int id, int x, int y, const char &especie, const string &nome, in
 
 }
 
-void Ovelha::verificaComportamento(int instante){
+void Ovelha::verificaAlimentacao(Alimento* alimento){
+    if(alimento->getcheiro() == "erva"){
+        setSaude(getSaude()+alimento->getValorNutritivo());
+        setSaude(getSaude()-alimento->getToxicidade());
+        alimento->setComido(1);
+    }
     return;
 }
 

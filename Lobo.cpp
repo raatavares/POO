@@ -12,7 +12,12 @@ Lobo::Lobo(int id, int x, int y, const char &especie, const string &nome, int fo
 
 }
 
-void Lobo::verificaComportamento(int instante){
+void Lobo::verificaAlimentacao(Alimento* alimento){
+    if(alimento->getcheiro() == "carne"){
+        setSaude(getSaude()+alimento->getValorNutritivo());
+        setSaude(getSaude()-alimento->getToxicidade());
+        alimento->setComido(1);
+    }
     return;
 }
 

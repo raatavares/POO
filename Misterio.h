@@ -12,7 +12,7 @@ class Misterio : public Animal {
 public:
     Misterio(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist);
     Misterio(int id, int x, int y);
-    void verificaComportamento(int instante) override;
+    void verificaAlimentacao(Alimento* alimento) override;
     ~Misterio();
 
 };

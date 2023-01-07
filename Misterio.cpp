@@ -11,7 +11,12 @@ Misterio::Misterio(int id, int x, int y, const char &especie, const string &nome
                const int &mov_dist,int detet_dist): Animal(especie, x,y, id, nome, fome, saude, peso, mov_dist,detet_dist){
 
 }
-void Misterio::verificaComportamento(int instante){
+void Misterio::verificaAlimentacao(Alimento* alimento){
+    if(alimento->getcheiro() == "corpo"){
+        setSaude(getSaude()+alimento->getValorNutritivo());
+        setSaude(getSaude()-2*(alimento->getToxicidade()));
+        alimento->setComido(1);
+    }
     return;
 }
 
