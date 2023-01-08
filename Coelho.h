@@ -16,7 +16,7 @@ public:
     Coelho(int id, int x, int y, int instante);
 
 
-
+    void interacaoAnimal(Animal *animal) override;
     void verificaComportamento(int instante) override;
     Animal * procria(int instante)  override;
 

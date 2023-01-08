@@ -148,6 +148,24 @@ int Animal::getTempo() const{
 
 
 
+void Animal::interacaoAnimal(Animal *animal) {
+
+}
+
+void Animal::setMov(int n) {
+    mov_dist=n;
+}
+
+int Animal::getFome()const {
+    return fome;
+}
+
+
+
+
+
+
+
 
 
 

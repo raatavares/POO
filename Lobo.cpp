@@ -35,3 +35,19 @@ Animal * Lobo::procria(int instante) {
         return new Lobo(-getID(),x,y);//id -1 e como se nao tivesse id
     }else return nullptr;
 }
+
+void Lobo::interacaoAnimal(Animal *animal) {
+    if(animal->getEspecieChar()!='L'){
+        if(getFome()<=15)this->setMov(2);
+        else this->setMov(3);
+        if(animal->getY()> this->getY())this->setY(getY()+1);
+        else if(animal->getY()< this->getY())this->setY(getY()-1);
+
+        if(animal->getX()> this->getX())this->setX(getX()+1);
+        else if(animal->getX()< this->getX())this->setX(getX()-1);
+    }else{
+        setMov(1);
+        return;
+    }
+}
+

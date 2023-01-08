@@ -221,6 +221,15 @@ void Reserva::recebeComando(const string &frase) {
 }
 
 void Reserva::passaInstante(int instante){
+    int flag=0;
+    for (auto it:animais) {
+        if(detetaAnimal(it->getID())){
+            for (auto ipt:animais) {
+                getRedondezaAnim(ipt->getID(),ipt->getDetet_dist());
+            }
+
+        }
+    }
     atualizaPosicoes();
     adicionaCria();
     /*
@@ -343,6 +352,13 @@ Animal* Reserva::getAnimal(int id) const
     }
     return nullptr;
 };
+Animal *Reserva::getAnimal(int x, int y) const {
+    for(int i=0 ; i < animais.size(); i++){
+        if(animais[i]->getY()==y && animais[i]->getX()==x)
+            return animais[i];
+    }
+    return nullptr;
+}
 Alimento* Reserva::getAlimento(int x, int y) const {
     for(int i=0 ; i < alimentos.size(); i++){
         if(alimentos[i]->getY()==y && alimentos[i]->getX()==x)
@@ -390,6 +406,8 @@ void Reserva::adicionaAlimento(Alimento *alimento)
 
 void Reserva::adicionaAnimal(Animal *animal)
 {
+
+
     animais.push_back(animal);
 };
 
@@ -421,6 +439,7 @@ void Reserva::removerAnimal(int id)
 {
     for (auto ptr = animais.begin(); ptr != animais.end(); ) {
         if ((*(ptr))->getID() == id){
+
             delete *(ptr);
             ptr = animais.erase(ptr);
         }
@@ -433,6 +452,7 @@ void Reserva::removerAnimal(int linha, int coluna)
 {
     for (auto ptr = animais.begin(); ptr != animais.end(); ) {
         if ((*(ptr))->getX() == linha && (*(ptr))->getY()== coluna) {
+
             delete *(ptr);
             ptr = animais.erase(ptr);
         }
@@ -626,7 +646,6 @@ void Reserva::reconstruct(const string &line) {
 void Reserva::atualizaPosicoes() {
     for (auto it:animais) {
         for (int i = 0; i <it->getMov_dist() ; ++i) {
-
             if(detetaProximidade(it->getID())) {
                 int idAlim = getID_AlimProx(it->getID());
                 if (idAlim<0)return;
@@ -689,6 +708,25 @@ bool Reserva::detetaProximidade(int id) const{
     }
     return false;
 }
+bool Reserva::detetaAnimal(int id) const {
+    for (auto it :animais) {
+        if(it->getID()==id){
+
+            for (int i = it->getX()-it->getDetet_dist(); i < it->getX()+it->getDetet_dist() ; ++i) {
+
+
+                for (int j = it->getY()-it->getDetet_dist(); j <it->getY()+it->getDetet_dist() ; ++j) {
+                    if(i==it->getX()&&j==it->getY()) continue;
+
+                    if (existeAnimal(i,j)){
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
 
 /*void Reserva::buscaAlimento() {
     int idAlim ;
@@ -717,8 +755,10 @@ int Reserva::getID_AlimProx(int id) const {
 }
 
 bool Reserva::alimentoCerto(int idAnimal, int idAlim) {
-    if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'C')
-        if (getAlimento(idAlim)->getcheiro()=="verdura") return true;
+    if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'C'){
+        if (getAlimento(idAlim)->getcheiro()=="verdura") {
+            return true;}
+    }
     else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'O')
         if (getAlimento(idAlim)->getcheiro()=="erva") return true;
     else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'L')
@@ -741,6 +781,39 @@ void Reserva::adicionaCria() {
 
     }
 }
+
+bool Reserva::getRedondezaAnim(int id, int dist) const {
+    int Mpeso=0,x,y;
+    for (auto it:animais) {
+        if(it->getID()==id){
+            for (int i = it->getX()-dist; i <it->getY()+dist ; ++i) {
+                for (int j =it->getY()-dist ; j <it->getY()+dist ; ++j) {
+                    if (existeAnimal(i,j) && id!= getAnimal(i,j)->getID()){
+                        cout<<"fe";
+                        if(Mpeso<getAnimal(i,j)->getPeso()){
+                            Mpeso=getAnimal(i,j)->getPeso();
+                                    x=i;
+                                    y=j;
+                        } ;
+
+                    }
+                }
+            }
+
+        }
+    }
+    if (existeAnimal(x,y)) {
+        getAnimal(id)->interacaoAnimal(getAnimal(x,y));
+        return true;
+    }
+    return false;
+}
+
+
+
+
+
+
 
 
 

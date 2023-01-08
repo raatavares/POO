@@ -2,6 +2,7 @@
 #define TP_ANIMAL_H
 
 #include "alimento.h"
+
 //#include "terminal.h"
 #include "coord.h"
 #include <vector>
@@ -15,6 +16,9 @@ class Animal {
     int x,y;
     vector<Alimento*> consumo;
     int criado_t;
+
+
+
 public:
     Animal()=default;
     Animal(const char &especie, int x, int y, const int &id, const string &nome, int fome, int saude, int peso,
@@ -28,9 +32,11 @@ public:
     int getX() const;
     int getY() const;
     int getDetet_dist() const;
+    int getFome() const;
     void setX(int x);
     void setY(int y);
     void setID(int newID);
+    void setMov(int n);
     int getMov_dist() const;
     string getEspecie() const;
     char getEspecieChar() const;
@@ -42,6 +48,9 @@ public:
 
     void movimenta();
 
+
+
+    virtual void interacaoAnimal(Animal *animal);
 
     string getAsString() const;
     string getToFile() const;

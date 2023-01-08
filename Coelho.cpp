@@ -36,6 +36,16 @@ Animal * Coelho::procria(int instante)  {
     }else return nullptr;
 }
 
+void Coelho::interacaoAnimal(Animal *animal) {
+    if(animal->getPeso()>10){
+        if(animal->getY()> this->getY())this->setY(getY()-1);
+        else if(animal->getY()< this->getY())this->setY(getY()+1);
+
+        if(animal->getX()> this->getX())this->setX(getX()-1);
+        else if(animal->getX()< this->getX())this->setX(getX()+1);
+    }else return;
+}
+
 
 
 

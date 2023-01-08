@@ -34,3 +34,15 @@ Animal *Ovelha::procria(int instante) {
         return new Ovelha(-getID(), x, y, 'O', "efnm", 0, 30, (4 + rand() % 8), 3, 3, 0);
     }else return nullptr;
 }
+
+void Ovelha::interacaoAnimal(Animal *animal) {
+
+    if(animal->getPeso()>15){
+        cout<<"existe";
+        if(animal->getY()> this->getY())this->setY(getY()-1);
+        else if(animal->getY()< this->getY())this->setY(getY()+1);
+
+        if(animal->getX()> this->getX())this->setX(getX()-1);
+        else if(animal->getX()< this->getX())this->setX(getX()+1);
+    }else return;
+}
