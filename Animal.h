@@ -4,7 +4,8 @@
 #include "alimento.h"
 
 //#include "terminal.h"
-#include "coord.h"
+#include <string.h>
+
 #include <vector>
 
 using namespace std;
@@ -14,7 +15,8 @@ class Animal {
     string nome;
     int saude,peso,fome,id,mov_dist,detet_dist;
     int x,y;
-    vector<Alimento*> consumo;
+    bool morte;
+    vector<string*> consumo;
     int criado_t;
 
 
@@ -31,16 +33,23 @@ public:
     int getID() const;
     int getX() const;
     int getY() const;
-    int getDetet_dist() const;
+    int getInstanteInicial() const;
+    bool getMorte() const;
     int getFome() const;
+    int getDetet_dist() const;
     void setX(int x);
     void setY(int y);
     void setID(int newID);
-    void setMov(int n);
+    void setSaude(int saude);
+    void setMorte(bool morte);
+    void setFome(int fome);
+    void setMov_dist(int mov);
+    void setPeso(int peso);
     int getMov_dist() const;
     string getEspecie() const;
     char getEspecieChar() const;
     string getAlimentacao() const;
+    void setMov(int n);
     void alimentaUser(int pontos_nutritivos,int toxicidade) ;
 
     void adiciona_Alimento(Alimento* a);
@@ -55,7 +64,7 @@ public:
     string getAsString() const;
     string getToFile() const;
 
-    virtual void verificaComportamento(int instante) = 0;
+    virtual void verificaComportamento(Alimento* alimento,int instante) = 0;
 
     virtual ~Animal();
 };

@@ -43,7 +43,7 @@ void Reserva::recebeComando(const string &frase) {
         coluna = stoi(*(arg.begin()+3));
         criaAnimal(*(*(arg.begin()+1)).c_str(),linha,coluna);
     }else if(comand=="teste"){
-        atualizaPosicoes();
+        atualizaPosicoes(instante);
     }
 
     else if(comand=="animal" && i==2) {
@@ -217,6 +217,7 @@ void Reserva::recebeComando(const string &frase) {
 
     else cout<<"invalido"<<endl;
 
+    cout << endl << endl;
     cout << getAsString();
 }
 
@@ -230,15 +231,11 @@ void Reserva::passaInstante(int instante){
 
         }
     }
-    atualizaPosicoes();
+    atualizaPosicoes(instante);
     adicionaCria();
-    /*
-    for(int i = 0; i < animais.size(); i++){
-        //animais[i]->verificaComportamento(instante);
-    }
     for(int i = 0; i < alimentos.size(); i++){
         alimentos[i]->verificaComportamento(instante);
-    }*/
+    }
 }
 
 void Reserva::defineConstante(const string &frase) {
@@ -285,15 +282,15 @@ void Reserva::criaAnimal(const char &especie, int x, int y) {
         y = rand() % nColunas;
     }
     if (toupper(especie) == 'C')
-        adicionaAnimal(new Coelho(total, x, y, 0));
+        adicionaAnimal(new Coelho(total, x, y, instante));
     else if (toupper(especie) == 'O')
         adicionaAnimal(new Ovelha(total, x, y, instante));
     else if (toupper(especie) == 'L')
-        adicionaAnimal(new Lobo(total,x,y));
+        adicionaAnimal(new Lobo(total,x,y, instante));
     else if (toupper(especie) == 'G')
-        adicionaAnimal(new Canguru(total, y, x, 0));
+        adicionaAnimal(new Canguru(total, y, x, instante));
     else if (toupper(especie) == 'M')
-        adicionaAnimal(new Misterio(total, x, y, 0));
+        adicionaAnimal(new Misterio(total, x, y, instante));
     total++;
 }
 
@@ -406,8 +403,6 @@ void Reserva::adicionaAlimento(Alimento *alimento)
 
 void Reserva::adicionaAnimal(Animal *animal)
 {
-
-
     animais.push_back(animal);
 };
 
@@ -612,18 +607,18 @@ void Reserva::reconstruct(const string &line) {
         //         0      1           2           3         4         5           6          7       8          9
         if (toupper(arg[1].c_str()[0]) == 'C')
             adicionaAnimal(new Coelho(stoi(arg[3]), stoi(arg[7]), stoi(arg[8]), arg[1].c_str()[0], arg[2], stoi(arg[5]),
-                                      stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), 0));
+                                      stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), instante));
         else if (toupper(arg[1].c_str()[0]) == 'O')
             adicionaAnimal(new Ovelha(stoi(arg[3]), stoi(arg[7]), stoi(arg[8]), arg[1].c_str()[0], arg[2], stoi(arg[5]),
-                                      stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), 0));
+                                      stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), instante));
         else if (toupper(arg[1].c_str()[0]) == 'L')
-            adicionaAnimal(new Lobo(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
+            adicionaAnimal(new Lobo(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10]), instante));
         else if (toupper(arg[1].c_str()[0]) == 'G')
             adicionaAnimal(new Canguru(stoi(arg[3]), stoi(arg[7]), stoi(arg[8]), arg[1].c_str()[0], arg[2],
-                                       stoi(arg[5]), stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), 0));
+                                       stoi(arg[5]), stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), instante));
         else if (toupper(arg[1].c_str()[0]) == 'M')
             adicionaAnimal(new Misterio(stoi(arg[3]), stoi(arg[7]), stoi(arg[8]), arg[1].c_str()[0], arg[2],
-                                        stoi(arg[5]), stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), 0));
+                                        stoi(arg[5]), stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), instante));
         total++;
     }else if(tipo=="Alimento"){
         /*Alimento_misterio(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,const string &cheiro);
@@ -643,7 +638,7 @@ void Reserva::reconstruct(const string &line) {
     };
 }
 
-void Reserva::atualizaPosicoes() {
+void Reserva::atualizaPosicoes(int instante) {
     for (auto it:animais) {
         for (int i = 0; i <it->getMov_dist() ; ++i) {
             if(detetaProximidade(it->getID())) {
@@ -685,6 +680,37 @@ void Reserva::atualizaPosicoes() {
             else if(it->getY()>nLinhas) it->setY(nLinhas);
         }
 
+        if(existeAlimento(it->getX(), it->getY())){
+            it->verificaComportamento(getAlimento(it->getX(), it->getY()), instante);
+            if(getAlimento(it->getX(), it->getY())->getComido() == 1)
+                removerAlimento(getAlimento(it->getX(), it->getY())->getId());
+        }
+    }
+    for (auto it:animais) {
+        if(it->getMorte() == true) {
+            if (toupper(it->getEspecieChar()) == 'C')
+                removerAnimal(it->getID());
+            if (toupper(it->getEspecieChar()) == 'O') {
+                adicionaAlimento(new Corpo(total, it->getX() + 1, it->getY(), 'p', it->getPeso(), 0, "carne"));
+                removerAnimal(it->getID());
+                total++;
+            }
+            if (toupper(it->getEspecieChar()) == 'L') {
+                adicionaAlimento(new Corpo(total, it->getX() + 1, it->getY(), 'p', 10, 0, "carne"));
+                removerAnimal(it->getID());
+                total++;
+            }
+            if (toupper(it->getEspecieChar()) == 'G') {
+                adicionaAlimento(new Corpo(total, it->getX() + 1, it->getY(), 'p', 15, 5, "carne"));
+                removerAnimal(it->getID());
+                total++;
+            }
+            if (toupper(it->getEspecieChar()) == 'M') {
+                adicionaAlimento(new Bife(total, it->getX(), it->getY(), 'b', instante, 0, "carne"));
+                removerAnimal(it->getID());
+                total++;
+            }
+        }
     }
 }
 

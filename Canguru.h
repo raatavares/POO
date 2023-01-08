@@ -16,7 +16,7 @@ public:
             const int &mov_dist, int detet_dist, int instante);
     Canguru(int id, int x, int y, int instante);
 
-    void verificaComportamento(int instante) override;
+    void verificaComportamento(Alimento* alimento,int instante) override;
     Animal * procria(int instante) override;
 
     ~Canguru();

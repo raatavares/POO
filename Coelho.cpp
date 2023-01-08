@@ -5,18 +5,35 @@
 #include <iostream>
 #include "Coelho.h"
 
-Coelho::Coelho(int id, int x, int y, int instante=0) : Animal('C', x, y, id, "pantufas", 0, 20, (1 + rand() % 4), 1, 4, instante) {
+Coelho::Coelho(int id, int x, int y, int instante) : Animal('C', x, y, id, "pantufas", 0, 20, (1 + rand() % 4), 1, 4, instante) {
     cout<<"procria["<<id<<"]";
     morre = 30;
 }
 Coelho::Coelho(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
-               const int &mov_dist, int detet_dist, int instante=0) : Animal(especie, x, y, id, nome, fome, saude, peso, mov_dist,
+               const int &mov_dist, int detet_dist, int instante) : Animal(especie, x, y, id, nome, fome, saude, peso, mov_dist,
                                                                            detet_dist, instante) {
 
 }
 
-
-void Coelho::verificaComportamento(int instante){
+void Coelho::verificaComportamento(Alimento* alimento, int instante){
+    if(alimento->getcheiro() == "verdura"){
+        setSaude(getSaude()+alimento->getValorNutritivo());
+        setSaude(getSaude()-alimento->getToxicidade());
+        adiciona_Alimento(alimento);
+        alimento->setComido(1);
+    }
+    if(getSaude() == 0)
+        setMorte(true);
+    if((instante-getInstanteInicial()) == 30)
+        setMorte(true);
+    setFome(getFome()+1);
+    if(getFome() > 20){
+        setSaude(getSaude()-2);
+        setMov_dist((1 + rand() % 4));
+    }else if(getFome() > 10){
+        setSaude(getSaude()-1);
+        setMov_dist((1 + rand() % 3));
+    }
     return;
 }
 

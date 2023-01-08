@@ -10,8 +10,8 @@ add_executable(POO
         Alimento.h
         Animal.cpp
         Animal.h
-        Coord.cpp
-        Coord.h
         main_teste_classes.cpp
+        Corpo.cpp
+        Corpo.h
         Reserva.cpp
-        Reserva.h Coelho.cpp Coelho.h Ovelha.cpp Ovelha.h Lobo.cpp Lobo.h Canguru.cpp Canguru.h Misterio.cpp Misterio.h)
+        Reserva.h Coelho.cpp Coelho.h Ovelha.cpp Ovelha.h Lobo.cpp Lobo.h Canguru.cpp Canguru.h Misterio.cpp Misterio.h Relva.cpp Relva.h Cenoura.cpp Cenoura.h Bife.cpp Bife.h Alimento_misterio.cpp Alimento_misterio.h)

@@ -5,7 +5,10 @@
 
 Animal::Animal(const char &especie, int x, int y, const int &id, const string &nome, int fome, int saude, int peso,
                const int &mov_dist, int detet_dist, int criado_t)
-        : especie(especie), x(x), y(y), nome(nome), fome(fome), saude(saude), peso(peso), id(id), mov_dist(mov_dist), detet_dist(detet_dist) {}
+        : especie(especie), x(x), y(y), nome(nome), fome(fome), saude(saude), peso(peso), id(id), mov_dist(mov_dist), detet_dist(detet_dist) {
+    this->criado_t = criado_t;
+    morte = false;
+}
 
 const string &Animal::getNome() const {
     return nome;
@@ -56,21 +59,18 @@ string Animal::getToFile() const {
 string Animal::getAlimentacao() const {
     ostringstream oss;
     for(const auto it : consumo){
-        oss<<it->getTipo()<<" ";
+        oss << it << endl;
     }
-    oss<<endl;
     return oss.str();
 }
 
 void Animal::adiciona_Alimento(Alimento* a) {
-    //Alimento al(a->getTipoChar(),a->getCoord(),a->getId(),a->getNutricao(),a->getToxicidade(),a->getcheiro());     //Acabar depois de alimento não esquecer composição
-
-    consumo.push_back(a);
-    cout << "1";
-    //delete(&a);  //nao convem destruir a classe a(Alimento)
+    string mensagem = (a->getTipo() + " com " + to_string(a->getValorNutritivo()) + " valor nutritivo e " + to_string(a->getToxicidade()) + " toxicidade");
+    consumo.push_back(&mensagem);
 }
 
 Animal::~Animal(){
+    consumo.clear();
     //cout << "Animal " << getNome() << " morreu" << endl;
 }
 
@@ -123,6 +123,38 @@ void Animal::setY(int y) {
     this->y=y;
 }
 
+void Animal::setSaude(int saude) {
+    this->saude=saude;
+}
+
+void Animal::setMorte(bool morte){
+    this->morte = morte;
+}
+
+void Animal::setFome(int fome){
+    this->fome = fome;
+}
+
+void Animal::setMov_dist(int mov){
+    mov_dist = mov;
+}
+
+void Animal::setPeso(int peso) {
+    this->peso = peso;
+}
+
+int Animal::getInstanteInicial() const{
+    return criado_t;
+}
+
+bool Animal::getMorte() const{
+    return morte;
+}
+int Animal::getFome() const{
+    return fome;
+}
+
+
 int Animal::getDetet_dist() const {
     return detet_dist;
 }
@@ -155,11 +187,6 @@ void Animal::interacaoAnimal(Animal *animal) {
 void Animal::setMov(int n) {
     mov_dist=n;
 }
-
-int Animal::getFome()const {
-    return fome;
-}
-
 
 
 

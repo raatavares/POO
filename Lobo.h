@@ -11,11 +11,11 @@ class Lobo : public Animal {
     int momentonascer;
 
 public:
-    Lobo(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist);
-    Lobo(int id, int x, int y);
+    Lobo(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist, int instante);
+    Lobo(int id, int x, int y, int instante);
 
     void interacaoAnimal(Animal *animal) override;
-    void verificaComportamento(int instante) override;
+    void verificaComportamento(Alimento* alimento,int instante) override;
     Animal * procria(int instante) override;
 
     ~Lobo();

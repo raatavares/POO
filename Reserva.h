@@ -16,6 +16,8 @@
 #include <string>
 #include <string.h>
 #include <unistd.h>
+#define MAX 500
+#define MIN 16
 
 
 class Reserva {
@@ -70,7 +72,7 @@ public:
     void reconstruct(const string& line);
     void feed(int x,int y,int pontos_nutritivos,int toxicidade);
     void feedid(int id,int pontos_nutritivos,int toxicidade);
-    void atualizaPosicoes();
+    void atualizaPosicoes(int instante);
     bool alimentoCerto(int idAnimal, int idAlim);
     bool detetaProximidade(int id) const;
     bool detetaAnimal(int id) const;

@@ -13,7 +13,7 @@ public:
     Misterio(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
              const int &mov_dist, int detet_dist, int instante);
     Misterio(int id, int x, int y, int instante);
-    void verificaComportamento(int instante) override;
+    void verificaComportamento(Alimento* alimento, int instante) override;
     ~Misterio();
 
 };

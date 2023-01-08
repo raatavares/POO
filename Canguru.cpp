@@ -5,17 +5,21 @@
 #include <iostream>
 #include "Canguru.h"
 
-Canguru::Canguru(int id, int x, int y, int instante=0) : Animal('G', x, y, id, "canguru", 0, 20, 10, 7, 7, instante), morre(70){
+Canguru::Canguru(int id, int x, int y, int instante) : Animal('G', x, y, id, "canguru", 0, 20, 10, 7, 7, instante), morre(70){
 
     cout<<"nfen"<<id;
 }
 Canguru::Canguru(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
-                 const int &mov_dist, int detet_dist, int instante=0) : Animal(especie, x, y, id, nome, fome, saude, peso, mov_dist,
+                 const int &mov_dist, int detet_dist, int instante) : Animal(especie, x, y, id, nome, fome, saude, peso, mov_dist,
                                                                              detet_dist, instante) {
 
 }
 
-void Canguru::verificaComportamento(int instante){
+void Canguru::verificaComportamento(Alimento* alimento, int instante){
+    if(getSaude() == 0)
+        setMorte(true);
+    if((instante-getInstanteInicial()) == 20)
+        setPeso(20);
     return;
 }
 

@@ -17,7 +17,7 @@ public:
 
 
     void interacaoAnimal(Animal *animal) override;
-    void verificaComportamento(int instante) override;
+    void verificaComportamento(Alimento* alimento,int instante) override;
     Animal * procria(int instante)  override;
 
     ~Coelho();

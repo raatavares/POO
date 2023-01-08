@@ -5,17 +5,32 @@
 #include <iostream>
 #include "Lobo.h"
                                                                                                                                 //aceder a variavel pai(Vlobo) ???
-Lobo::Lobo(int id, int x, int y) : Animal('L', x, y, id, "bolt", 0, 25, 15, 1, 5, 0), momentonascer(rand() % (40 - (5) + 1) + (5)){
-    cout<<"procria["<<id<<"]";
+Lobo::Lobo(int id, int x, int y, int instante) : Animal('L', x, y, id, "bolt", 0, 25, 15, 1, 5, instante), momentonascer(rand() % (40 - (5) + 1) + (5)){
+    cout<<"procria["<<id<<"]"<<endl;
     temCria=0;
 }
 Lobo::Lobo(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
-               const int &mov_dist,int detet_dist): Animal(especie, x, y, id, nome, fome, saude, peso, mov_dist,
-                                                           detet_dist, 0) {
+               const int &mov_dist,int detet_dist, int instante): Animal(especie, x, y, id, nome, fome, saude, peso, mov_dist,
+                                                           detet_dist, instante) {
     temCria=0;
 }
 
-void Lobo::verificaComportamento(int instante){
+void Lobo::verificaComportamento(Alimento* alimento, int instante){
+    if(alimento->getcheiro() == "carne"){
+        setSaude(getSaude()+alimento->getValorNutritivo());
+        setSaude(getSaude()-alimento->getToxicidade());
+        adiciona_Alimento(alimento);
+        alimento->setComido(1);
+    }
+    if(getSaude() == 0)
+        setMorte(true);
+    setFome(getFome()+2);
+    if(getFome() > 25){
+        setSaude(getSaude()-2);
+    }else if(getFome() > 15){
+        setSaude(getSaude()-2);
+        setMov_dist(2);
+    }
     return;
 }
 
@@ -32,7 +47,7 @@ Animal * Lobo::procria(int instante) {
         if(y<0) y=0;
         temCria++;
         if (temCria ) cout<<"ndknd";
-        return new Lobo(-getID(),x,y);//id -1 e como se nao tivesse id
+        return new Lobo(-getID(),x,y,instante);//id -1 e como se nao tivesse id
     }else return nullptr;
 }
 

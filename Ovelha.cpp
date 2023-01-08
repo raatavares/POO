@@ -10,12 +10,29 @@ Ovelha::Ovelha(int id, int x, int y, int instante=0) : Animal('O', x, y, id, "ov
     morre = 35;
 }
 Ovelha::Ovelha(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
-               const int &mov_dist, int detet_dist, int instante=0) : Animal(especie, x, y, id, nome, fome, saude, peso, mov_dist,
+               const int &mov_dist, int detet_dist, int instante) : Animal(especie, x, y, id, nome, fome, saude, peso, mov_dist,
                                                                            detet_dist, instante), morre(35){
     cout<<"nasceu:-"<<getID()<<endl;
 }
 
-void Ovelha::verificaComportamento(int instante){
+void Ovelha::verificaComportamento(Alimento* alimento, int instante){
+    if(alimento->getcheiro() == "erva"){
+        setSaude(getSaude()+alimento->getValorNutritivo());
+        setSaude(getSaude()-alimento->getToxicidade());
+        adiciona_Alimento(alimento);
+        alimento->setComido(1);
+    }
+    if(getSaude() == 0)
+        setMorte(true);
+    if((instante-getInstanteInicial()) == 35)
+        setMorte(true);
+    setFome(getFome()+1);
+    if(getFome() > 20){
+        setSaude(getSaude()-2);
+    }else if(getFome() > 15){
+        setSaude(getSaude()-1);
+        setMov_dist((1 + rand() % 2));
+    }
     return;
 }
 
