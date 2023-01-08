@@ -10,9 +10,10 @@ class Misterio : public Animal {
 
 
 public:
-    Misterio(int id,int x,int y,const char &especie,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist);
-    Misterio(int id, int x, int y);
-    void verificaAlimentacao(Alimento* alimento) override;
+    Misterio(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
+             const int &mov_dist, int detet_dist, int instante);
+    Misterio(int id, int x, int y, int instante);
+    void verificaComportamento(int instante) override;
     ~Misterio();
 
 };

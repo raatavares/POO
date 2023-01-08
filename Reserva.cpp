@@ -222,9 +222,14 @@ void Reserva::recebeComando(const string &frase) {
 
 void Reserva::passaInstante(int instante){
     atualizaPosicoes();
+    adicionaCria();
+    /*
+    for(int i = 0; i < animais.size(); i++){
+        //animais[i]->verificaComportamento(instante);
+    }
     for(int i = 0; i < alimentos.size(); i++){
         alimentos[i]->verificaComportamento(instante);
-    }
+    }*/
 }
 
 void Reserva::defineConstante(const string &frase) {
@@ -271,15 +276,15 @@ void Reserva::criaAnimal(const char &especie, int x, int y) {
         y = rand() % nColunas;
     }
     if (toupper(especie) == 'C')
-        adicionaAnimal(new Coelho(total,x,y));
+        adicionaAnimal(new Coelho(total, x, y, 0));
     else if (toupper(especie) == 'O')
-        adicionaAnimal(new Ovelha(total,x,y));
+        adicionaAnimal(new Ovelha(total, x, y, instante));
     else if (toupper(especie) == 'L')
         adicionaAnimal(new Lobo(total,x,y));
     else if (toupper(especie) == 'G')
-        adicionaAnimal(new Canguru(total,x,y));
+        adicionaAnimal(new Canguru(total, y, x, 0));
     else if (toupper(especie) == 'M')
-        adicionaAnimal(new Misterio(total,x,y));
+        adicionaAnimal(new Misterio(total, x, y, 0));
     total++;
 }
 
@@ -586,15 +591,19 @@ void Reserva::reconstruct(const string &line) {
          oss<<"Animal "<<especie<<" "<<nome<<" "<<id<<" "<<saude<<" "<<fome<<" "<<peso<<" "<<x<<" "<<y<<" "<< mov <<endl;*/
         //         0      1           2           3         4         5           6          7       8          9
         if (toupper(arg[1].c_str()[0]) == 'C')
-            adicionaAnimal(new Coelho(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
+            adicionaAnimal(new Coelho(stoi(arg[3]), stoi(arg[7]), stoi(arg[8]), arg[1].c_str()[0], arg[2], stoi(arg[5]),
+                                      stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), 0));
         else if (toupper(arg[1].c_str()[0]) == 'O')
-            adicionaAnimal(new Ovelha(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
+            adicionaAnimal(new Ovelha(stoi(arg[3]), stoi(arg[7]), stoi(arg[8]), arg[1].c_str()[0], arg[2], stoi(arg[5]),
+                                      stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), 0));
         else if (toupper(arg[1].c_str()[0]) == 'L')
             adicionaAnimal(new Lobo(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
         else if (toupper(arg[1].c_str()[0]) == 'G')
-            adicionaAnimal(new Canguru(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
+            adicionaAnimal(new Canguru(stoi(arg[3]), stoi(arg[7]), stoi(arg[8]), arg[1].c_str()[0], arg[2],
+                                       stoi(arg[5]), stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), 0));
         else if (toupper(arg[1].c_str()[0]) == 'M')
-            adicionaAnimal(new Misterio(stoi(arg[3]),stoi(arg[7]),stoi(arg[8]),arg[1].c_str()[0],arg[2],stoi(arg[5]),stoi(arg[4]),stoi(arg[6]),stoi(arg[9]),stoi(arg[10])));
+            adicionaAnimal(new Misterio(stoi(arg[3]), stoi(arg[7]), stoi(arg[8]), arg[1].c_str()[0], arg[2],
+                                        stoi(arg[5]), stoi(arg[4]), stoi(arg[6]), stoi(arg[9]), stoi(arg[10]), 0));
         total++;
     }else if(tipo=="Alimento"){
         /*Alimento_misterio(int id, int x, int y, const char &especie, int val_nutritivo, int toxicidade,const string &cheiro);
@@ -620,9 +629,8 @@ void Reserva::atualizaPosicoes() {
 
             if(detetaProximidade(it->getID())) {
                 int idAlim = getID_AlimProx(it->getID());
-
+                if (idAlim<0)return;
                 if (!alimentoCerto(it->getID(),idAlim)){
-                    cout<<"indf3dfj";
                     it->movimenta();
                     break;
                 }
@@ -657,14 +665,6 @@ void Reserva::atualizaPosicoes() {
             else if(it->getY()>nColunas) it->setY(nColunas);
             else if(it->getY()>nLinhas) it->setY(nLinhas);
         }
-
-        if(existeAlimento(it->getX(), it->getY())){
-            it->verificaAlimentacao(getAlimento(it->getX(), it->getY()));
-            if(getAlimento(it->getX(), it->getY())->getComido() == 1)
-                removerAlimento(getAlimento(it->getX(), it->getY())->getId());
-        }
-
-
 
     }
 }
@@ -713,19 +713,36 @@ int Reserva::getID_AlimProx(int id) const {
             }
         }
     }
+    return -1;
 }
 
 bool Reserva::alimentoCerto(int idAnimal, int idAlim) {
     if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'C')
         if (getAlimento(idAlim)->getcheiro()=="verdura") return true;
-        else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'O')
-            if (getAlimento(idAlim)->getcheiro()=="erva") return true;
-            else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'L')
-                if (getAlimento(idAlim)->getcheiro()=="carne") return true;
+    else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'O')
+        if (getAlimento(idAlim)->getcheiro()=="erva") return true;
+    else if (toupper(getAnimal(idAnimal)->getEspecieChar()) == 'L')
+        if (getAlimento(idAlim)->getcheiro()=="carne") return true;
 
     return false;
 
 }
+
+void Reserva::adicionaCria() {
+    Animal* cria;
+    for (Animal* it:animais) {
+        cria=it->procria(instante);
+        if(cria!= nullptr){
+            cria->setID(total);
+
+            animais.push_back(cria);
+            total++;
+        }
+
+    }
+}
+
+
 
 
 

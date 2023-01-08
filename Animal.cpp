@@ -3,7 +3,9 @@
 
 
 
-Animal::Animal(const char &especie,int x,int y,const int &id,const string &nome,int fome,int saude,int peso,const int &mov_dist,int detet_dist):especie(especie), x(x),y(y),nome(nome),fome(fome),saude(saude),peso(peso),id(id),mov_dist(mov_dist),detet_dist(detet_dist) {}
+Animal::Animal(const char &especie, int x, int y, const int &id, const string &nome, int fome, int saude, int peso,
+               const int &mov_dist, int detet_dist, int criado_t)
+        : especie(especie), x(x), y(y), nome(nome), fome(fome), saude(saude), peso(peso), id(id), mov_dist(mov_dist), detet_dist(detet_dist) {}
 
 const string &Animal::getNome() const {
     return nome;
@@ -91,28 +93,24 @@ void Animal::movimenta() {
     int pos = rand() % 16;
     if(pos==0||pos==15){
         y++;
-        cout<<"mexeu"<<endl;
     }else if(pos==1||pos==14){
         y++;x++;
-        cout<<"mexeu"<<endl;
     }else if(pos==2||pos==13){
         x++;
-        cout<<"mexeu"<<endl;
     }else if(pos==3||pos==12){
         y--;x++;
-        cout<<"mexeu"<<endl;
+
     }else if(pos==4||pos==11){
         y--;
-        cout<<"mexeu"<<endl;
     }else if(pos==5||pos==10){
         y--;x--;
-        cout<<"mexeu"<<endl;
+
     }else if(pos==6||pos==9){
         x--;
-        cout<<"mexeu"<<endl;
+
     }else if(pos==7||pos==8){
         y++;x--;
-        cout<<"mexeu"<<endl;
+
     }
 }
 
@@ -125,10 +123,6 @@ void Animal::setY(int y) {
     this->y=y;
 }
 
-void Animal::setSaude(int saude) {
-    this->saude=saude;
-}
-
 int Animal::getDetet_dist() const {
     return detet_dist;
 }
@@ -136,6 +130,20 @@ int Animal::getDetet_dist() const {
 char Animal::getEspecieChar() const {
     return especie;
 }
+
+Animal *Animal::procria(int instante)  {
+
+    return nullptr;
+}
+
+void Animal::setID(int newID) {
+    id=newID;
+}
+
+int Animal::getTempo() const{
+    return criado_t;
+}
+
 
 
 

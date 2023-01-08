@@ -8,7 +8,7 @@ int main() {
 
     reserva.criaAlimento('t',7,7);
     reserva.criaAlimento('b',5,8);
-    reserva.criaAnimal('C',3, 8);
+    reserva.criaAnimal('O',3, 8);
 
 
     cout << reserva.getAsString()<<endl<<endl;

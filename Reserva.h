@@ -55,6 +55,7 @@ public:
     void setC_inicial(int c);
     void adicionaAlimento(Alimento *alimento);
     void adicionaAnimal(Animal *animal);
+    void adicionaCria();
     void removerAlimento(int id);
     void removerAlimento(int linha, int coluna);
     void removerAnimal(int id);
@@ -73,6 +74,8 @@ public:
     bool detetaProximidade(int id) const;
     int getID_AlimProx(int id) const;
     //void buscaAlimento();
+
+
     ~Reserva();
 
 };

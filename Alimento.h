@@ -8,7 +8,7 @@ using namespace std;
 
 class Alimento {
     char tipo;
-    int val_nutritivo,toxicidade,id, instanteInicial, comido;
+    int val_nutritivo,toxicidade,id, instanteInicial;
     bool morte;
     int x,y;
     string cheiro;
@@ -25,14 +25,12 @@ public:
     int getX() const;
     int getY() const;
     string getcheiro() const;
-    int getComido() const;
     string getTipo() const;
     char getTipoChar() const;
 
     void setMorte(bool v);
     void setToxicidade(int toxicidade);
     void setValorNutritivo(int valorNutritivo);
-    void setComido(int comido);
 
     string getAsString() const;
     string getToFile() const;

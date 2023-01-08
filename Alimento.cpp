@@ -16,7 +16,6 @@ Alimento::Alimento(const char &tipo, int x, int y, const int id, int val_nutriti
                                                                                                                   cheiro(cheiro), id(id){
     instanteInicial = 0;
     morte = false;
-    comido = 0;
 }
 
 
@@ -57,10 +56,6 @@ string Alimento::getcheiro() const {
     return cheiro;
 }
 
-int Alimento::getComido() const {
-    return comido;
-}
-
 char Alimento::getTipoChar() const {
     return tipo;
 }
@@ -75,10 +70,6 @@ void Alimento::setToxicidade(int toxicidade){
 
 void Alimento::setValorNutritivo(int valorNutritivo){
     this->val_nutritivo = valorNutritivo;
-}
-
-void Alimento::setComido(int comido){
-    this->comido = comido;
 }
 
 string Alimento::getAsString() const {
