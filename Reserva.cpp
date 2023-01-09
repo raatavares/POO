@@ -224,6 +224,7 @@ void Reserva::recebeComando(const string &frase) {
 void Reserva::passaInstante(int instante){
     int flag=0;
     for (auto it:animais) {
+        if (it->getEspecieChar()=='L') mataRedondezas(it->getID());
         if(detetaAnimal(it->getID())){
             for (auto ipt:animais) {
                 getRedondezaAnim(ipt->getID(),ipt->getDetet_dist());
@@ -812,7 +813,7 @@ bool Reserva::getRedondezaAnim(int id, int dist) const {
     int Mpeso=0,x,y;
     for (auto it:animais) {
         if(it->getID()==id){
-            for (int i = it->getX()-dist; i <it->getY()+dist ; ++i) {
+            for (int i = it->getX()-dist; i <it->getX()+dist ; ++i) {
                 for (int j =it->getY()-dist ; j <it->getY()+dist ; ++j) {
                     if (existeAnimal(i,j) && id!= getAnimal(i,j)->getID()){
                         cout<<"fe";
@@ -833,6 +834,43 @@ bool Reserva::getRedondezaAnim(int id, int dist) const {
         return true;
     }
     return false;
+}
+
+void Reserva::mataRedondezas(int id)  {
+    for (auto it:animais) {
+        if (it->getID()==id){
+            for (int i = it->getX()-1; i <it->getX()+1 ; ++i) {
+                for (int j =it->getY()-1 ; j <it->getY()+1 ; ++j) {
+                    if(existeAnimal(i,j)) {
+                        if(id!= getAnimal(i,j)->getID())  {
+                            if (getAnimal(i, j)->getPeso() > it->getPeso()) {
+                                int prob = rand() % 101;
+                                if(prob>50)
+                                    removerAnimal(it->getID());
+                                else
+                                    removerAnimal(i,j);
+                            }
+
+                        }
+
+                    }
+                    //cout<<" bdeu "<<i<<" "<<j<<endl;
+                }
+            }
+            for (int i = it->getX()-1; i <it->getX()+1 ; ++i) {
+                for (int j =it->getY()-1 ; j <it->getY()+1 ; ++j) {
+                    if(existeAnimal(i,j)) {
+                      if(id!= getAnimal(i,j)->getID())  {
+                          if (getAnimal(i, j)->getPeso() < it->getPeso()) removerAnimal(i, j);
+                      }
+
+                    }
+                    //cout<<" bdeu "<<i<<" "<<j<<endl;
+                }
+            }
+
+        }
+    }
 }
 
 

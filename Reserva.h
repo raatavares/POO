@@ -77,6 +77,7 @@ public:
     bool detetaProximidade(int id) const;
     bool detetaAnimal(int id) const;
     int getID_AlimProx(int id) const;
+    void mataRedondezas(int id) ;
 
     bool getRedondezaAnim(int id, int dist) const;
     //void buscaAlimento();

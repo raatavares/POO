@@ -48,7 +48,7 @@ Animal * Coelho::procria(int instante)  {
         if(x<0) x=0;
         int y= getY()+rand()%(10-(-10)+1) +(-10);
         if(y<0) y=0;
-        return new Coelho(-getID(), x, y, 0);//id -1 e como se nao tivesse id
+        return new Coelho(-getID(), x, y, instante);//id -1 e como se nao tivesse id
 
     }else return nullptr;
 }

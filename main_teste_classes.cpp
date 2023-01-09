@@ -8,7 +8,9 @@ int main() {
 
 
     reserva.criaAnimal('C',3, 8);
-    reserva.criaAnimal('L',2, 8);
+    reserva.criaAnimal('L',1, 8);
+
+
 
 
     cout << reserva.getAsString()<<endl<<endl;
