@@ -58,7 +58,7 @@ public:
     void movimenta();
 
 
-
+    virtual int getPai()const ;
     virtual void interacaoAnimal(Animal *animal);
 
     string getAsString() const;

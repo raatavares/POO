@@ -6,7 +6,7 @@
 #include "Lobo.h"
                                                                                                                                 //aceder a variavel pai(Vlobo) ???
 Lobo::Lobo(int id, int x, int y, int instante) : Animal('L', x, y, id, "bolt", 0, 25, 15, 1, 5, instante), momentonascer(rand() % (40 - (5) + 1) + (5)){
-    cout<<"procria["<<id<<"]"<<endl;
+
     temCria=0;
 }
 Lobo::Lobo(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,
@@ -46,7 +46,7 @@ Animal * Lobo::procria(int instante) {
         int y= getY()+rand()%(15-(-15)+1) +(-15);
         if(y<0) y=0;
         temCria++;
-        if (temCria ) cout<<"ndknd";
+
         return new Lobo(-getID(),x,y,instante);//id -1 e como se nao tivesse id
     }else return nullptr;
 }

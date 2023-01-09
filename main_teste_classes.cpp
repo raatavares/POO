@@ -7,8 +7,8 @@ int main() {
 
 
 
-    reserva.criaAnimal('C',3, 8);
-    reserva.criaAnimal('L',1, 8);
+    //reserva.criaAnimal('C',3, 8);
+    reserva.criaAnimal('G',1, 8);
 
 
 

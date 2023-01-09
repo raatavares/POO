@@ -225,6 +225,7 @@ void Reserva::passaInstante(int instante){
     int flag=0;
     for (auto it:animais) {
         if (it->getEspecieChar()=='L') mataRedondezas(it->getID());
+        if (it->getEspecieChar()=='G') filhoComportamento(it->getID());
         if(detetaAnimal(it->getID())){
             for (auto ipt:animais) {
                 getRedondezaAnim(ipt->getID(),ipt->getDetet_dist());
@@ -816,7 +817,6 @@ bool Reserva::getRedondezaAnim(int id, int dist) const {
             for (int i = it->getX()-dist; i <it->getX()+dist ; ++i) {
                 for (int j =it->getY()-dist ; j <it->getY()+dist ; ++j) {
                     if (existeAnimal(i,j) && id!= getAnimal(i,j)->getID()){
-                        cout<<"fe";
                         if(Mpeso<getAnimal(i,j)->getPeso()){
                             Mpeso=getAnimal(i,j)->getPeso();
                                     x=i;
@@ -871,6 +871,19 @@ void Reserva::mataRedondezas(int id)  {
 
         }
     }
+}
+
+void Reserva::filhoComportamento(int id) const {
+
+    if (getAnimal(id)->getTempo()+10>instante && getAnimal(id)->getPai()>=0){
+
+        int paiID=getAnimal(id)->getPai();
+        if(getAnimal(paiID)== nullptr)return;
+
+        getAnimal(id)->interacaoAnimal(getAnimal(paiID));
+    }
+
+
 }
 
 

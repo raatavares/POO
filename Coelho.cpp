@@ -6,7 +6,6 @@
 #include "Coelho.h"
 
 Coelho::Coelho(int id, int x, int y, int instante) : Animal('C', x, y, id, "pantufas", 0, 20, (1 + rand() % 4), 1, 4, instante) {
-    cout<<"procria["<<id<<"]";
     morre = 30;
 }
 Coelho::Coelho(int id, int x, int y, const char &especie, const string &nome, int fome, int saude, int peso,

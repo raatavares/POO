@@ -188,6 +188,10 @@ void Animal::setMov(int n) {
     mov_dist=n;
 }
 
+int Animal::getPai() const {
+    return 0;
+}
+
 
 
 
